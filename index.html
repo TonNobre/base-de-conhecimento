@@ -1,0 +1,2017 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="h-full bg-slate-950 text-slate-100">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Base de Conhecimento - Hub de Vendas e Scripts</title>
+  
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Google Fonts: Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+          },
+          colors: {
+            brand: {
+              50: '#eef2ff',
+              100: '#e0e7ff',
+              500: '#6366f1',
+              600: '#4f46e5',
+              700: '#4338ca',
+            }
+          }
+        }
+      }
+    };
+  </script>
+
+  <style>
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #090d16;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #1e293b;
+      border-radius: 9999px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #334155;
+    }
+  </style>
+</head>
+<body class="h-full font-sans antialiased selection:bg-indigo-500 selection:text-white bg-slate-950 text-slate-100 flex flex-col">
+
+  <!-- Toast Container -->
+  <div id="toastContainer" class="fixed top-5 right-5 z-50 flex flex-col gap-2 pointer-events-none"></div>
+
+  <!-- App Wrapper -->
+  <div id="app" class="min-h-full flex-1 flex flex-col">
+
+    <!-- 1. VIEW: AUTH (LOGIN & REGISTER) -->
+    <section id="authView" class="min-h-screen flex items-center justify-center p-4 bg-gradient-to-br from-slate-950 via-slate-900 to-indigo-950/40">
+      <div class="w-full max-w-md">
+        
+        <!-- Brand Header -->
+        <div class="text-center mb-8">
+          <div class="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-gradient-to-tr from-indigo-600 via-indigo-500 to-blue-500 shadow-xl shadow-indigo-500/25 ring-1 ring-white/20 mb-4">
+            <i data-lucide="book-marked" class="w-7 h-7 text-white"></i>
+          </div>
+          <h1 class="text-2xl font-extrabold tracking-tight text-white">Base de Conhecimento</h1>
+          <p class="text-sm text-slate-400 mt-1">Hub de Vendas e Scripts</p>
+        </div>
+
+        <!-- Auth Card -->
+        <div class="bg-slate-900/90 border border-slate-800 rounded-3xl p-6 sm:p-8 shadow-2xl backdrop-blur-xl relative overflow-hidden">
+          <div class="absolute -top-24 -right-24 w-48 h-48 bg-indigo-500/10 rounded-full blur-3xl pointer-events-none"></div>
+          
+          <!-- Mode Tabs -->
+          <div class="flex items-center p-1 bg-slate-950/80 rounded-xl border border-slate-800/80 mb-6">
+            <button id="tabLoginBtn" type="button" onclick="switchAuthTab('login')" class="flex-1 py-2 text-xs font-semibold rounded-lg transition text-white bg-indigo-600 shadow-sm">
+              Entrar
+            </button>
+            <button id="tabRegisterBtn" type="button" onclick="switchAuthTab('register')" class="flex-1 py-2 text-xs font-semibold rounded-lg transition text-slate-400 hover:text-slate-200">
+              Criar Acesso
+            </button>
+          </div>
+
+          <!-- Login Form -->
+          <form id="loginForm" onsubmit="handleLogin(event)" class="space-y-4">
+            <div>
+              <label class="block text-xs font-medium text-slate-300 mb-1.5">E-mail</label>
+              <div class="relative">
+                <i data-lucide="mail" class="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2"></i>
+                <input 
+                  type="email" 
+                  id="loginEmail" 
+                  required
+                  placeholder="ex: consultor@baseconhecimento.com"
+                  class="w-full pl-10 pr-4 py-2.5 bg-slate-950/60 border border-slate-800 rounded-xl text-sm text-white placeholder-slate-500 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition"
+                >
+              </div>
+            </div>
+
+            <div>
+              <div class="flex items-center justify-between mb-1.5">
+                <label class="block text-xs font-medium text-slate-300">Senha</label>
+                <button 
+                  type="button" 
+                  onclick="openForgotPasswordModal()" 
+                  class="text-xs text-indigo-400 hover:text-indigo-300 font-medium transition"
+                >
+                  Esqueceu a senha?
+                </button>
+              </div>
+              <div class="relative">
+                <i data-lucide="lock" class="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2"></i>
+                <input 
+                  type="password" 
+                  id="loginPassword" 
+                  required
+                  placeholder="••••••••"
+                  class="w-full pl-10 pr-10 py-2.5 bg-slate-950/60 border border-slate-800 rounded-xl text-sm text-white placeholder-slate-500 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition"
+                >
+                <button 
+                  type="button" 
+                  onclick="togglePasswordVisibility('loginPassword', 'eyeIconLogin')"
+                  class="absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-200 transition"
+                >
+                  <i id="eyeIconLogin" data-lucide="eye" class="w-4 h-4"></i>
+                </button>
+              </div>
+            </div>
+
+            <div class="flex items-center justify-between text-xs pt-1">
+              <label class="flex items-center gap-2 cursor-pointer select-none text-slate-400 hover:text-slate-300">
+                <input type="checkbox" id="rememberMe" checked class="rounded border-slate-800 bg-slate-950 text-indigo-600 focus:ring-0 w-3.5 h-3.5">
+                Lembrar sessão
+              </label>
+              <button type="button" onclick="fillDemoCredentials()" class="text-indigo-400 hover:text-indigo-300 font-medium underline">
+                Preencher Acesso Padrão
+              </button>
+            </div>
+
+            <button 
+              type="submit" 
+              class="w-full py-3 px-4 mt-2 rounded-xl bg-gradient-to-r from-indigo-600 to-indigo-700 hover:from-indigo-500 hover:to-indigo-600 text-white font-semibold text-sm shadow-lg shadow-indigo-600/30 transition duration-150 active:scale-[0.99] flex items-center justify-center gap-2"
+            >
+              <span>Acessar Base de Conhecimento</span>
+              <i data-lucide="arrow-right" class="w-4 h-4"></i>
+            </button>
+          </form>
+
+          <!-- Register Form -->
+          <form id="registerForm" onsubmit="handleRegister(event)" class="space-y-4 hidden">
+            <div>
+              <label class="block text-xs font-medium text-slate-300 mb-1.5">Seu Nome</label>
+              <div class="relative">
+                <i data-lucide="user" class="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2"></i>
+                <input 
+                  type="text" 
+                  id="regName" 
+                  required
+                  placeholder="ex: Wellington"
+                  class="w-full pl-10 pr-4 py-2.5 bg-slate-950/60 border border-slate-800 rounded-xl text-sm text-white placeholder-slate-500 focus:outline-none focus:border-indigo-500 transition"
+                >
+              </div>
+            </div>
+
+            <div>
+              <label class="block text-xs font-medium text-slate-300 mb-1.5">E-mail</label>
+              <div class="relative">
+                <i data-lucide="mail" class="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2"></i>
+                <input 
+                  type="email" 
+                  id="regEmail" 
+                  required
+                  placeholder="seuemail@empresa.com"
+                  class="w-full pl-10 pr-4 py-2.5 bg-slate-950/60 border border-slate-800 rounded-xl text-sm text-white placeholder-slate-500 focus:outline-none focus:border-indigo-500 transition"
+                >
+              </div>
+            </div>
+
+            <div>
+              <label class="block text-xs font-medium text-slate-300 mb-1.5">Senha</label>
+              <div class="relative">
+                <i data-lucide="lock" class="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2"></i>
+                <input 
+                  type="password" 
+                  id="regPassword" 
+                  required
+                  minlength="6"
+                  placeholder="Mínimo 6 caracteres"
+                  class="w-full pl-10 pr-10 py-2.5 bg-slate-950/60 border border-slate-800 rounded-xl text-sm text-white placeholder-slate-500 focus:outline-none focus:border-indigo-500 transition"
+                >
+                <button 
+                  type="button" 
+                  onclick="togglePasswordVisibility('regPassword', 'eyeIconReg')"
+                  class="absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-200 transition"
+                >
+                  <i id="eyeIconReg" data-lucide="eye" class="w-4 h-4"></i>
+                </button>
+              </div>
+            </div>
+
+            <button 
+              type="submit" 
+              class="w-full py-3 px-4 mt-2 rounded-xl bg-gradient-to-r from-indigo-600 to-indigo-700 hover:from-indigo-500 hover:to-indigo-600 text-white font-semibold text-sm shadow-lg shadow-indigo-600/30 transition duration-150 active:scale-[0.99] flex items-center justify-center gap-2"
+            >
+              <span>Criar Meu Perfil e Entrar</span>
+              <i data-lucide="user-plus" class="w-4 h-4"></i>
+            </button>
+          </form>
+
+          <div class="mt-6 pt-5 border-t border-slate-800/80 text-center space-y-2">
+            <p class="text-xs text-slate-400">
+              Ambiente de alta velocidade para vendas e suporte consultivo.
+            </p>
+            <div class="pt-1">
+              <button 
+                type="button" 
+                onclick="resetCredentialsToDefault(true)" 
+                class="inline-flex items-center gap-1.5 text-[11px] text-amber-400 hover:text-amber-300 transition"
+              >
+                <i data-lucide="rotate-ccw" class="w-3.5 h-3.5"></i>
+                <span>Zerar credenciais e cadastrar novo perfil</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- 2. VIEW: PROTECTED APP CONTAINER -->
+    <section id="dashboardView" class="hidden flex-1 flex flex-col bg-slate-950">
+      
+      <!-- Top Global Bar -->
+      <header class="border-b border-slate-800/80 bg-slate-900/80 backdrop-blur-md sticky top-0 z-30">
+        <div class="w-full px-4 sm:px-6 lg:px-8">
+          <div class="flex items-center justify-between h-20">
+            
+            <!-- Left: Logo & Breadcrumb -->
+            <div class="flex items-center gap-3">
+              <button type="button" onclick="navigateToView('home')" class="flex items-center gap-3 text-left focus:outline-none group">
+                <div class="w-11 h-11 rounded-2xl bg-gradient-to-tr from-indigo-600 to-indigo-500 flex items-center justify-center font-bold text-white shadow-lg shadow-indigo-600/25 ring-1 ring-white/20 group-hover:scale-105 transition">
+                  <i data-lucide="book-marked" class="w-6 h-6 text-white"></i>
+                </div>
+                <div>
+                  <div class="flex items-center gap-2">
+                    <h1 class="font-bold text-white tracking-tight text-base sm:text-lg group-hover:text-indigo-400 transition">Base de Conhecimento</h1>
+                    <span class="hidden sm:inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-medium bg-indigo-500/10 text-indigo-400 border border-indigo-500/20">
+                      Hub de Vendas e Scripts
+                    </span>
+                  </div>
+                  <p id="navBreadcrumb" class="text-xs text-slate-400 flex items-center gap-1.5">
+                    <span>Início</span>
+                  </p>
+                </div>
+              </button>
+            </div>
+
+            <!-- Right: User Avatar + Profile Edit Trigger + Logout -->
+            <div class="flex items-center gap-3 sm:gap-4">
+              <!-- Profile Clickable Badge -->
+              <button 
+                type="button"
+                onclick="openProfileModal()"
+                title="Editar Perfil e Foto"
+                class="flex items-center gap-3 bg-slate-950/70 hover:bg-slate-800/80 border border-slate-800 rounded-2xl px-3 py-1.5 transition text-left group"
+              >
+                <div class="relative">
+                  <img 
+                    id="userAvatarImg" 
+                    src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=120&h=120&q=80" 
+                    alt="Foto do Perfil"
+                    class="w-9 h-9 rounded-xl object-cover ring-2 ring-indigo-500/40"
+                    onerror="this.src='https://placehold.co/100x100/4f46e5/ffffff?text=U'"
+                  >
+                  <span class="absolute -bottom-1 -right-1 w-3.5 h-3.5 rounded-full bg-emerald-500 border-2 border-slate-950"></span>
+                </div>
+                <div class="hidden sm:block">
+                  <div class="flex items-center gap-1">
+                    <p id="topUserName" class="text-xs font-semibold text-white group-hover:text-indigo-300 transition">Wellington</p>
+                    <i data-lucide="pencil" class="w-2.5 h-2.5 text-slate-500 group-hover:text-indigo-400"></i>
+                  </div>
+                  <p class="text-[10px] text-slate-400">Consultor Comercial</p>
+                </div>
+              </button>
+
+              <!-- Logout Button -->
+              <button 
+                type="button"
+                onclick="handleLogout()" 
+                title="Encerrar sessão"
+                class="p-2 sm:px-3 sm:py-2 rounded-xl bg-rose-500/10 hover:bg-rose-500/20 text-rose-400 border border-rose-500/20 text-xs font-medium transition flex items-center gap-1.5"
+              >
+                <i data-lucide="log-out" class="w-4 h-4"></i>
+                <span class="hidden md:inline">Sair</span>
+              </button>
+            </div>
+
+          </div>
+        </div>
+      </header>
+
+      <!-- Main Dynamic Content Region -->
+      <main class="flex-1 w-full px-4 sm:px-6 lg:px-8 py-8 flex flex-col justify-start">
+
+        <!-- A. PORTAL DE BOAS-VINDAS (HOME HUB) -->
+        <section id="portalHomeView" class="space-y-8 w-full">
+          
+          <!-- Hero Welcome Card -->
+          <div class="relative bg-gradient-to-r from-slate-900 via-slate-900 to-indigo-950/60 border border-slate-800 rounded-3xl p-6 sm:p-10 shadow-2xl overflow-hidden w-full">
+            <div class="absolute -right-10 -bottom-10 w-64 h-64 bg-indigo-500/10 rounded-full blur-3xl pointer-events-none"></div>
+            
+            <div class="flex flex-col md:flex-row md:items-center justify-between gap-6 relative z-10">
+              
+              <div class="flex items-start sm:items-center gap-5">
+                <!-- Clickable Avatar to edit profile -->
+                <button type="button" onclick="openProfileModal()" class="relative group shrink-0" title="Clique para editar sua foto e perfil">
+                  <img 
+                    id="welcomeAvatarImg" 
+                    src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=200&h=200&q=80" 
+                    alt="Foto do Usuário"
+                    class="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl object-cover ring-4 ring-indigo-500/30 group-hover:ring-indigo-400 transition"
+                    onerror="this.src='https://placehold.co/150x150/4f46e5/ffffff?text=Foto'"
+                  >
+                  <div class="absolute inset-0 bg-black/40 rounded-2xl flex items-center justify-center opacity-0 group-hover:opacity-100 transition backdrop-blur-[2px]">
+                    <i data-lucide="camera" class="w-5 h-5 text-white"></i>
+                  </div>
+                </button>
+
+                <div>
+                  <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-medium bg-indigo-500/10 text-indigo-400 border border-indigo-500/20 mb-2">
+                    <span id="welcomeTimeBadge" class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                    <span id="welcomeDateFull">Terça-feira, 20 de outubro</span>
+                  </div>
+                  <h2 class="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
+                    <span id="greetingTimeText">Bom dia</span>, seja bem-vindo, <span id="welcomeUserName" class="text-indigo-400">Wellington</span>!
+                  </h2>
+                  <p class="text-sm text-slate-400 mt-1">
+                    Seu cockpit comercial e guia de soluções práticas está pronto para o atendimento de hoje.
+                  </p>
+                </div>
+              </div>
+
+              <!-- Quick action to edit profile -->
+              <div class="flex items-center gap-3">
+                <button 
+                  type="button"
+                  onclick="openProfileModal()"
+                  class="px-4 py-2.5 rounded-xl bg-slate-800/80 hover:bg-slate-700/80 border border-slate-700 text-xs font-semibold text-slate-200 transition flex items-center gap-2 shadow-sm"
+                >
+                  <i data-lucide="user-cog" class="w-4 h-4 text-indigo-400"></i>
+                  <span>Editar Meu Perfil</span>
+                </button>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- Question Prompt -->
+          <div class="text-center sm:text-left pt-2">
+            <h3 class="text-lg sm:text-xl font-bold text-white tracking-tight flex items-center gap-2">
+              <i data-lucide="compass" class="w-5 h-5 text-indigo-400"></i>
+              O que você deseja fazer hoje?
+            </h3>
+            <p class="text-xs sm:text-sm text-slate-400 mt-0.5">Selecione uma das centrais para iniciar seu trabalho:</p>
+          </div>
+
+          <!-- The Two Main Portals -->
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+            <!-- Card Portal 1: SCRIPTS DE VENDAS -->
+            <div 
+              onclick="navigateToView('scripts')"
+              class="group relative bg-slate-900/90 hover:bg-slate-900 border border-slate-800 hover:border-indigo-500/60 rounded-3xl p-7 transition-all duration-300 hover:shadow-2xl hover:shadow-indigo-500/10 cursor-pointer flex flex-col justify-between overflow-hidden"
+            >
+              <div class="absolute top-0 right-0 p-8 opacity-10 group-hover:opacity-20 group-hover:scale-110 transition-all duration-500 text-indigo-400 pointer-events-none">
+                <i data-lucide="message-square-quote" class="w-32 h-32"></i>
+              </div>
+
+              <div>
+                <div class="w-14 h-14 rounded-2xl bg-indigo-600/10 border border-indigo-500/30 flex items-center justify-center text-indigo-400 group-hover:bg-indigo-600 group-hover:text-white transition duration-300 mb-6 shadow-md">
+                  <i data-lucide="message-square-code" class="w-7 h-7"></i>
+                </div>
+
+                <div class="flex items-center gap-2 mb-2">
+                  <span class="text-[11px] font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-indigo-500/10 text-indigo-400 border border-indigo-500/20">
+                    Comunicação & Conversão
+                  </span>
+                  <span id="homeScriptsCounterBadge" class="text-[11px] text-slate-500">5 scripts prontos</span>
+                </div>
+
+                <h4 class="text-xl font-bold text-white group-hover:text-indigo-300 transition mb-2">
+                  Acessar Scripts de Atendimento
+                </h4>
+                <p class="text-xs sm:text-sm text-slate-400 leading-relaxed mb-6">
+                  Playbook completo de abordagem. Copie em 1 clique mensagens validadas para Instagram Direct, WhatsApp, agendamento de chamada no Google Meet e contorno de objeções.
+                </p>
+              </div>
+
+              <div class="pt-4 border-t border-slate-800/80 flex items-center justify-between text-xs font-semibold text-indigo-400 group-hover:text-indigo-300">
+                <span class="flex items-center gap-1.5">
+                  <i data-lucide="zap" class="w-3.5 h-3.5 text-amber-400"></i>
+                  Copiar e colar em 1 clique
+                </span>
+                <div class="flex items-center gap-1 group-hover:translate-x-1.5 transition">
+                  <span>Abrir Scripts</span>
+                  <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                </div>
+              </div>
+            </div>
+
+            <!-- Card Portal 2: BASE DE CONHECIMENTO -->
+            <div 
+              onclick="navigateToView('knowledge')"
+              class="group relative bg-slate-900/90 hover:bg-slate-900 border border-slate-800 hover:border-emerald-500/60 rounded-3xl p-7 transition-all duration-300 hover:shadow-2xl hover:shadow-emerald-500/10 cursor-pointer flex flex-col justify-between overflow-hidden"
+            >
+              <div class="absolute top-0 right-0 p-8 opacity-10 group-hover:opacity-20 group-hover:scale-110 transition-all duration-500 text-emerald-400 pointer-events-none">
+                <i data-lucide="library" class="w-32 h-32"></i>
+              </div>
+
+              <div>
+                <div class="w-14 h-14 rounded-2xl bg-emerald-600/10 border border-emerald-500/30 flex items-center justify-center text-emerald-400 group-hover:bg-emerald-600 group-hover:text-white transition duration-300 mb-6 shadow-md">
+                  <i data-lucide="layers" class="w-7 h-7"></i>
+                </div>
+
+                <div class="flex items-center gap-2 mb-2">
+                  <span class="text-[11px] font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+                    Regras de Negócio & Suporte
+                  </span>
+                  <span id="homeKnowledgeCounterBadge" class="text-[11px] text-slate-500">4 guias operacionais</span>
+                </div>
+
+                <h4 class="text-xl font-bold text-white group-hover:text-emerald-300 transition mb-2">
+                  Acessar Base de Conhecimento
+                </h4>
+                <p class="text-xs sm:text-sm text-slate-400 leading-relaxed mb-6">
+                  Situações do cotidiano com o cliente, dúvidas frequentes de suporte e regras de negócio: emissão de Nota Fiscal, clientes com menos/mais de 1.000 vendas e rotinas do dia a dia.
+                </p>
+              </div>
+
+              <div class="pt-4 border-t border-slate-800/80 flex items-center justify-between text-xs font-semibold text-emerald-400 group-hover:text-emerald-300">
+                <span class="flex items-center gap-1.5">
+                  <i data-lucide="help-circle" class="w-3.5 h-3.5 text-emerald-400"></i>
+                  Soluções para o dia a dia
+                </span>
+                <div class="flex items-center gap-1 group-hover:translate-x-1.5 transition">
+                  <span>Abrir Base</span>
+                  <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Bottom Operational Quick Tip -->
+          <div class="bg-slate-900/40 border border-slate-800/80 rounded-2xl p-4 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-slate-400">
+            <div class="flex items-center gap-2">
+              <i data-lucide="shield-check" class="w-4 h-4 text-indigo-400 shrink-0"></i>
+              <span>Sua base está segura neste navegador com sincronização contínua.</span>
+            </div>
+            <div class="flex items-center gap-4">
+              <button type="button" onclick="exportFullBackup()" class="text-indigo-400 hover:text-indigo-300 underline font-medium">Exportar Backup Completo (JSON)</button>
+            </div>
+          </div>
+
+        </section>
+
+
+        <!-- B. SEÇÃO 1: PLAYBOOK DE SCRIPTS -->
+        <section id="sectionScriptsView" class="hidden space-y-6">
+          
+          <!-- Top Bar -->
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-slate-900/90 border border-slate-800 rounded-2xl p-4 sm:p-5 shadow-xl">
+            <div class="flex items-center gap-3">
+              <button 
+                type="button"
+                onclick="navigateToView('home')"
+                class="inline-flex items-center gap-2 px-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-xs font-semibold text-slate-300 hover:text-white hover:border-slate-700 transition"
+              >
+                <i data-lucide="arrow-left" class="w-4 h-4"></i>
+                <span>Voltar ao Menu</span>
+              </button>
+              <div>
+                <h2 class="text-lg font-bold text-white flex items-center gap-2">
+                  <i data-lucide="message-square-quote" class="w-5 h-5 text-indigo-400"></i>
+                  Playbook de Scripts
+                </h2>
+                <p class="text-xs text-slate-400">Gerencie, edite ou crie scripts sem mexer no código</p>
+              </div>
+            </div>
+
+            <!-- Prominent Add Button -->
+            <button 
+              type="button"
+              onclick="openScriptModal()"
+              class="px-5 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs sm:text-sm shadow-lg shadow-indigo-600/30 transition active:scale-95 flex items-center justify-center gap-2 border border-indigo-400/30 ring-2 ring-indigo-500/20"
+            >
+              <i data-lucide="plus-circle" class="w-4 h-4"></i>
+              <span>+ Novo Script de Vendas</span>
+            </button>
+          </div>
+
+          <!-- Search & Filters Container -->
+          <div class="bg-slate-900/70 border border-slate-800 rounded-2xl p-4 sm:p-5 shadow-xl space-y-4 w-full">
+            
+            <div class="flex flex-col md:flex-row gap-4 items-stretch md:items-center justify-between">
+              <!-- Search Input -->
+              <div class="relative flex-1">
+                <i data-lucide="search" class="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2"></i>
+                <input 
+                  type="text" 
+                  id="searchScriptInput"
+                  oninput="renderScripts()"
+                  placeholder="Buscar script ou palavra-chave (ex: Instagram, Meet, objeção)..." 
+                  class="w-full pl-10 pr-4 py-3 bg-slate-950/80 border border-slate-800 rounded-xl text-sm sm:text-base text-white placeholder-slate-500 focus:outline-none focus:border-indigo-500 transition"
+                >
+              </div>
+
+              <!-- Filter Tags -->
+              <div class="flex items-center gap-2 overflow-x-auto pb-1 md:pb-0" id="filterScriptTagsBar">
+                <!-- Injected via JS -->
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Scripts Grid (Full Screen Width) -->
+          <div id="scriptsGrid" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 w-full">
+            <!-- Dynamic cards injected via JS -->
+          </div>
+
+        </section>
+
+
+        <!-- C. SEÇÃO 2: BASE DE CONHECIMENTO & SUPORTE -->
+        <section id="sectionKnowledgeView" class="hidden space-y-6 w-full">
+          
+          <!-- Top Bar -->
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-slate-900/90 border border-slate-800 rounded-2xl p-4 sm:p-5 shadow-xl w-full">
+            <div class="flex items-center gap-3">
+              <button 
+                type="button"
+                onclick="navigateToView('home')"
+                class="inline-flex items-center gap-2 px-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-xs font-semibold text-slate-300 hover:text-white hover:border-slate-700 transition"
+              >
+                <i data-lucide="arrow-left" class="w-4 h-4"></i>
+                <span>Voltar ao Menu</span>
+              </button>
+              <div>
+                <h2 class="text-xl font-bold text-white flex items-center gap-2">
+                  <i data-lucide="library" class="w-5 h-5 text-emerald-400"></i>
+                  Base de Conhecimento & Suporte
+                </h2>
+                <p class="text-xs text-slate-400">Orientações operacionais, regras e dúvidas do dia a dia</p>
+              </div>
+            </div>
+
+            <button 
+              type="button"
+              onclick="openKnowledgeModal()"
+              class="px-5 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs sm:text-sm shadow-lg shadow-emerald-600/30 transition active:scale-95 flex items-center justify-center gap-2 border border-emerald-400/30 ring-2 ring-emerald-500/20"
+            >
+              <i data-lucide="plus-circle" class="w-4 h-4"></i>
+              <span>+ Nova Orientação</span>
+            </button>
+          </div>
+
+          <!-- Search & Knowledge Filters -->
+          <div class="bg-slate-900/70 border border-slate-800 rounded-2xl p-4 sm:p-5 shadow-xl space-y-4 w-full">
+            
+            <div class="flex flex-col md:flex-row gap-4 items-stretch md:items-center justify-between">
+              <!-- Search Input -->
+              <div class="relative flex-1">
+                <i data-lucide="search" class="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2"></i>
+                <input 
+                  type="text" 
+                  id="searchKnowledgeInput"
+                  oninput="renderKnowledgeArticles()"
+                  placeholder="Pesquisar situação (ex: nota fiscal, 1000 vendas, suporte, caixa)..." 
+                  class="w-full pl-10 pr-4 py-3 bg-slate-950/80 border border-slate-800 rounded-xl text-sm sm:text-base text-white placeholder-slate-500 focus:outline-none focus:border-emerald-500 transition"
+                >
+              </div>
+
+              <!-- Knowledge Filter Tags -->
+              <div class="flex items-center gap-2 overflow-x-auto pb-1 md:pb-0" id="filterKnowledgeTagsBar">
+                <!-- Injected via JS -->
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Knowledge Cards Grid -->
+          <div id="knowledgeGrid" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 w-full">
+            <!-- Dynamic knowledge cards injected via JS -->
+          </div>
+
+        </section>
+
+      </main>
+
+    </section>
+
+  </div>
+
+  <!-- MODAL: EDIT USER PROFILE -->
+  <div id="profileModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-sm hidden">
+    <div class="bg-slate-900 border border-slate-800 rounded-3xl w-full max-w-lg p-6 sm:p-7 shadow-2xl relative">
+      
+      <div class="flex items-center justify-between pb-4 mb-5 border-b border-slate-800">
+        <div class="flex items-center gap-3">
+          <div class="p-2.5 rounded-xl bg-indigo-600/10 text-indigo-400 border border-indigo-500/20">
+            <i data-lucide="user-pen" class="w-5 h-5"></i>
+          </div>
+          <div>
+            <h3 class="text-base font-bold text-white">Editar Meu Perfil</h3>
+            <p class="text-xs text-slate-400">Atualize sua foto, nome de exibição e credenciais</p>
+          </div>
+        </div>
+        <button type="button" onclick="closeProfileModal()" class="text-slate-400 hover:text-slate-200 p-1.5 rounded-lg hover:bg-slate-800 transition">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+
+      <form onsubmit="handleSaveProfile(event)" class="space-y-4">
+        
+        <!-- File Upload Area for Avatar -->
+        <input 
+          type="file" 
+          id="profileImageFileInput" 
+          accept="image/*" 
+          class="hidden" 
+          onchange="handleProfileImageSelect(event)"
+        >
+
+        <div class="flex items-center gap-4 p-4 bg-slate-950/60 rounded-2xl border border-slate-800">
+          <button 
+            type="button" 
+            onclick="triggerAvatarUpload()"
+            class="relative group shrink-0 rounded-2xl overflow-hidden focus:outline-none focus:ring-2 focus:ring-indigo-500 transition"
+            title="Clique para escolher uma imagem do seu aparelho"
+          >
+            <img 
+              id="modalAvatarPreview" 
+              src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=150&h=150&q=80" 
+              alt="Preview Foto" 
+              class="w-16 h-16 rounded-2xl object-cover ring-2 ring-indigo-500/40"
+              onerror="this.src='https://placehold.co/100x100/4f46e5/ffffff?text=Foto'"
+            >
+            <div class="absolute inset-0 bg-slate-950/60 flex flex-col items-center justify-center opacity-0 group-hover:opacity-100 transition backdrop-blur-[1px]">
+              <i data-lucide="camera" class="w-5 h-5 text-white"></i>
+              <span class="text-[9px] font-bold text-white mt-0.5">Trocar</span>
+            </div>
+          </button>
+
+          <div class="flex-1">
+            <label class="block text-xs font-semibold text-slate-200 mb-1">Foto de Perfil</label>
+            <p class="text-[11px] text-slate-400 leading-tight mb-2.5">
+              Escolha qualquer foto do seu dispositivo. Ela é otimizada para salvar com segurança no navegador.
+            </p>
+            <div class="flex items-center gap-2">
+              <button 
+                type="button" 
+                onclick="triggerAvatarUpload()"
+                class="px-3 py-1.5 rounded-xl bg-indigo-600/20 hover:bg-indigo-600/30 text-indigo-300 border border-indigo-500/30 text-xs font-semibold transition flex items-center gap-1.5"
+              >
+                <i data-lucide="upload" class="w-3.5 h-3.5"></i>
+                <span>Escolher do dispositivo</span>
+              </button>
+              <button 
+                type="button" 
+                onclick="removeProfileImage()"
+                class="px-2.5 py-1.5 rounded-xl bg-slate-800 hover:bg-rose-500/20 text-slate-400 hover:text-rose-400 border border-slate-700 hover:border-rose-500/30 text-xs font-medium transition"
+                title="Restaurar avatar padrão"
+              >
+                Remover
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-xs font-semibold text-slate-300 mb-1.5">Nome de Exibição</label>
+          <input 
+            type="text" 
+            id="profileNameInput" 
+            required 
+            placeholder="Seu nome"
+            class="w-full px-3.5 py-2.5 bg-slate-950 border border-slate-800 rounded-xl text-xs sm:text-sm text-white placeholder-slate-500 focus:outline-none focus:border-indigo-500"
+          >
+        </div>
+
+        <div>
+          <label class="block text-xs font-semibold text-slate-300 mb-1.5">E-mail Profissional</label>
+          <input 
+            type="email" 
+            id="profileEmailInput" 
+            required 
+            placeholder="seuemail@empresa.com"
+            class="w-full px-3.5 py-2.5 bg-slate-950 border border-slate-800 rounded-xl text-xs sm:text-sm text-white placeholder-slate-500 focus:outline-none focus:border-indigo-500"
+          >
+        </div>
+
+        <div>
+          <label class="block text-xs font-semibold text-slate-300 mb-1.5">Nova Senha (deixe em branco se não quiser alterar)</label>
+          <input 
+            type="password" 
+            id="profilePasswordInput" 
+            minlength="6"
+            placeholder="••••••••"
+            class="w-full px-3.5 py-2.5 bg-slate-950 border border-slate-800 rounded-xl text-xs sm:text-sm text-white placeholder-slate-500 focus:outline-none focus:border-indigo-500"
+          >
+        </div>
+
+        <div class="pt-3 flex items-center justify-end gap-3 border-t border-slate-800">
+          <button 
+            type="button" 
+            onclick="closeProfileModal()" 
+            class="px-4 py-2.5 rounded-xl border border-slate-700 text-xs font-medium text-slate-300 hover:bg-slate-800 transition"
+          >
+            Cancelar
+          </button>
+          <button 
+            type="submit" 
+            class="px-5 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-semibold text-xs sm:text-sm shadow-lg shadow-indigo-600/30 transition flex items-center gap-2"
+          >
+            <i data-lucide="check" class="w-4 h-4"></i>
+            <span>Salvar Alterações</span>
+          </button>
+        </div>
+      </form>
+
+    </div>
+  </div>
+
+  <!-- MODAL: CREATE / EDIT SCRIPT -->
+  <div id="scriptModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-sm hidden">
+    <div class="bg-slate-900 border border-slate-800 rounded-3xl w-full max-w-xl p-6 sm:p-7 shadow-2xl relative">
+      
+      <div class="flex items-center justify-between pb-4 mb-4 border-b border-slate-800">
+        <div class="flex items-center gap-2.5">
+          <div class="p-2 rounded-xl bg-indigo-600/10 text-indigo-400 border border-indigo-500/20">
+            <i data-lucide="message-square" class="w-5 h-5"></i>
+          </div>
+          <div>
+            <h3 id="modalScriptTitleHeader" class="text-base font-bold text-white">Criar Novo Script</h3>
+            <p class="text-xs text-slate-400">Mensagem pronta para Direct, WhatsApp ou Objeção</p>
+          </div>
+        </div>
+        <button type="button" onclick="closeScriptModal()" class="text-slate-400 hover:text-slate-200 p-1.5 rounded-lg hover:bg-slate-800 transition">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+
+      <form id="scriptForm" onsubmit="handleSaveScript(event)" class="space-y-4">
+        <input type="hidden" id="modalScriptId">
+
+        <div>
+          <label class="block text-xs font-semibold text-slate-300 mb-1.5">Título do Script</label>
+          <input 
+            type="text" 
+            id="modalScriptTitle" 
+            required 
+            placeholder="Ex: Direct Instagram: Pegar WhatsApp (Sem Sistema)"
+            class="w-full px-3.5 py-2.5 bg-slate-950 border border-slate-800 rounded-xl text-xs sm:text-sm text-white placeholder-slate-500 focus:outline-none focus:border-indigo-500"
+          >
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div>
+            <label class="block text-xs font-semibold text-slate-300 mb-1.5">Etapa / Canal</label>
+            <select 
+              id="modalScriptTag" 
+              class="w-full px-3 py-2.5 bg-slate-950 border border-slate-800 rounded-xl text-xs sm:text-sm text-white focus:outline-none focus:border-indigo-500"
+            >
+              <option value="Instagram">Instagram</option>
+              <option value="WhatsApp">WhatsApp</option>
+              <option value="Agendamento Meet">Agendamento Meet</option>
+              <option value="Objeções">Objeções</option>
+              <option value="Follow-up">Follow-up</option>
+            </select>
+          </div>
+
+          <div>
+            <label class="block text-xs font-semibold text-slate-300 mb-1.5">Objetivo Estratégico</label>
+            <input 
+              type="text" 
+              id="modalScriptObjective" 
+              required 
+              placeholder="Ex: Transbordar para WhatsApp sem prometer PDF"
+              class="w-full px-3.5 py-2.5 bg-slate-950 border border-slate-800 rounded-xl text-xs sm:text-sm text-white placeholder-slate-500 focus:outline-none focus:border-indigo-500"
+            >
+          </div>
+        </div>
+
+        <div>
+          <div class="flex items-center justify-between mb-1.5">
+            <label class="block text-xs font-semibold text-slate-300">Texto Exato do Script</label>
+            <span class="text-[11px] text-slate-500">Pronto para envio imediato</span>
+          </div>
+          <textarea 
+            id="modalScriptContent" 
+            rows="6" 
+            required
+            placeholder="Digite aqui o script exato que será copiado para o cliente..."
+            class="w-full p-3.5 bg-slate-950 border border-slate-800 rounded-xl text-xs sm:text-sm text-white placeholder-slate-500 focus:outline-none focus:border-indigo-500 font-mono leading-relaxed"
+          ></textarea>
+        </div>
+
+        <div class="pt-3 flex items-center justify-end gap-3 border-t border-slate-800">
+          <button 
+            type="button" 
+            onclick="closeScriptModal()" 
+            class="px-4 py-2.5 rounded-xl border border-slate-700 text-xs font-medium text-slate-300 hover:bg-slate-800 transition"
+          >
+            Cancelar
+          </button>
+          <button 
+            type="submit" 
+            class="px-5 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-semibold text-xs sm:text-sm shadow-lg shadow-indigo-600/30 transition flex items-center gap-2"
+          >
+            <i data-lucide="save" class="w-4 h-4"></i>
+            <span>Salvar Script</span>
+          </button>
+        </div>
+      </form>
+
+    </div>
+  </div>
+
+  <!-- MODAL: CREATE / EDIT KNOWLEDGE ARTICLE -->
+  <div id="knowledgeModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-sm hidden">
+    <div class="bg-slate-900 border border-slate-800 rounded-3xl w-full max-w-xl p-6 sm:p-7 shadow-2xl relative">
+      
+      <div class="flex items-center justify-between pb-4 mb-4 border-b border-slate-800">
+        <div class="flex items-center gap-2.5">
+          <div class="p-2 rounded-xl bg-emerald-600/10 text-emerald-400 border border-emerald-500/20">
+            <i data-lucide="file-text" class="w-5 h-5"></i>
+          </div>
+          <div>
+            <h3 id="modalKnowledgeHeader" class="text-base font-bold text-white">Nova Regra / Dúvida de Suporte</h3>
+            <p class="text-xs text-slate-400">Guia de procedimento e resposta padrão</p>
+          </div>
+        </div>
+        <button type="button" onclick="closeKnowledgeModal()" class="text-slate-400 hover:text-slate-200 p-1.5 rounded-lg hover:bg-slate-800 transition">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+
+      <form onsubmit="handleSaveKnowledge(event)" class="space-y-4">
+        <input type="hidden" id="modalKnowledgeId">
+
+        <div>
+          <label class="block text-xs font-semibold text-slate-300 mb-1.5">Situação / Pergunta do Cliente</label>
+          <input 
+            type="text" 
+            id="modalKnowledgeTitle" 
+            required 
+            placeholder="Ex: Cliente quer emitir nota fiscal (NF-e ou NFC-e)"
+            class="w-full px-3.5 py-2.5 bg-slate-950 border border-slate-800 rounded-xl text-xs sm:text-sm text-white placeholder-slate-500 focus:outline-none focus:border-emerald-500"
+          >
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div>
+            <label class="block text-xs font-semibold text-slate-300 mb-1.5">Categoria / Cenário</label>
+            <select 
+              id="modalKnowledgeTag" 
+              class="w-full px-3 py-2.5 bg-slate-950 border border-slate-800 rounded-xl text-xs sm:text-sm text-white focus:outline-none focus:border-emerald-500"
+            >
+              <option value="Fiscal & NF-e">Fiscal & NF-e</option>
+              <option value="Faixas de Vendas">Faixas de Vendas</option>
+              <option value="Suporte do Dia a Dia">Suporte do Dia a Dia</option>
+              <option value="Estoque & Caixa">Estoque & Caixa</option>
+              <option value="Regras de Negócio">Regras de Negócio</option>
+            </select>
+          </div>
+
+          <div>
+            <label class="block text-xs font-semibold text-slate-300 mb-1.5">Ação Resumida / Diagnóstico</label>
+            <input 
+              type="text" 
+              id="modalKnowledgeSummary" 
+              required 
+              placeholder="Ex: Verificar Certificado A1 e credenciamento na Sefaz"
+              class="w-full px-3.5 py-2.5 bg-slate-950 border border-slate-800 rounded-xl text-xs sm:text-sm text-white placeholder-slate-500 focus:outline-none focus:border-emerald-500"
+            >
+          </div>
+        </div>
+
+        <div>
+          <div class="flex items-center justify-between mb-1.5">
+            <label class="block text-xs font-semibold text-slate-300">Solução Detalhada & Instruções Passo a Passo</label>
+            <span class="text-[11px] text-slate-500">Orientação prática para o cliente</span>
+          </div>
+          <textarea 
+            id="modalKnowledgeContent" 
+            rows="6" 
+            required
+            placeholder="Descreva onde o cliente clica, o que precisa ser configurado e a resposta oficial..."
+            class="w-full p-3.5 bg-slate-950 border border-slate-800 rounded-xl text-xs sm:text-sm text-white placeholder-slate-500 focus:outline-none focus:border-emerald-500 leading-relaxed font-sans"
+          ></textarea>
+        </div>
+
+        <div class="pt-3 flex items-center justify-end gap-3 border-t border-slate-800">
+          <button 
+            type="button" 
+            onclick="closeKnowledgeModal()" 
+            class="px-4 py-2.5 rounded-xl border border-slate-700 text-xs font-medium text-slate-300 hover:bg-slate-800 transition"
+          >
+            Cancelar
+          </button>
+          <button 
+            type="submit" 
+            class="px-5 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-semibold text-xs sm:text-sm shadow-lg shadow-emerald-600/30 transition flex items-center gap-2"
+          >
+            <i data-lucide="save" class="w-4 h-4"></i>
+            <span>Salvar na Base</span>
+          </button>
+        </div>
+      </form>
+
+    </div>
+  </div>
+
+  <!-- MODAL: ESQUECEU A SENHA / RECUPERAR ACESSO -->
+  <div id="forgotPasswordModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/85 backdrop-blur-sm hidden">
+    <div class="bg-slate-900 border border-slate-800 rounded-3xl w-full max-w-md p-6 sm:p-7 shadow-2xl relative">
+      <div class="flex items-center justify-between pb-4 mb-4 border-b border-slate-800">
+        <div class="flex items-center gap-2.5">
+          <div class="p-2 rounded-xl bg-amber-500/10 text-amber-400 border border-amber-500/20">
+            <i data-lucide="key-round" class="w-5 h-5"></i>
+          </div>
+          <div>
+            <h3 class="text-base font-bold text-white">Recuperar Minha Senha</h3>
+            <p class="text-xs text-slate-400">Defina uma nova senha ou redefina o acesso</p>
+          </div>
+        </div>
+        <button type="button" onclick="closeForgotPasswordModal()" class="text-slate-400 hover:text-slate-200 p-1.5 rounded-lg hover:bg-slate-800 transition">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+
+      <form onsubmit="handleResetPasswordSubmit(event)" class="space-y-4">
+        <div>
+          <label class="block text-xs font-semibold text-slate-300 mb-1.5">Seu E-mail Cadastrado</label>
+          <input 
+            type="email" 
+            id="forgotEmailInput" 
+            required 
+            placeholder="Digite o e-mail cadastrado"
+            class="w-full px-3.5 py-2.5 bg-slate-950 border border-slate-800 rounded-xl text-xs sm:text-sm text-white placeholder-slate-500 focus:outline-none focus:border-indigo-500"
+          >
+          <p id="forgotEmailHint" class="text-[11px] text-slate-400 mt-1">Dica: verifique se não há espaços extras antes ou depois do e-mail.</p>
+        </div>
+
+        <div>
+          <label class="block text-xs font-semibold text-slate-300 mb-1.5">Nova Senha</label>
+          <div class="relative">
+            <input 
+              type="password" 
+              id="forgotNewPasswordInput" 
+              required 
+              minlength="6"
+              placeholder="Digite a nova senha (mínimo 6 caracteres)"
+              class="w-full pl-3.5 pr-10 py-2.5 bg-slate-950 border border-slate-800 rounded-xl text-xs sm:text-sm text-white placeholder-slate-500 focus:outline-none focus:border-indigo-500"
+            >
+            <button 
+              type="button" 
+              onclick="togglePasswordVisibility('forgotNewPasswordInput', 'eyeIconForgot')"
+              class="absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-200 transition"
+            >
+              <i id="eyeIconForgot" data-lucide="eye" class="w-4 h-4"></i>
+            </button>
+          </div>
+        </div>
+
+        <div class="pt-2 flex flex-col gap-2.5">
+          <button 
+            type="submit" 
+            class="w-full py-2.5 px-4 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-semibold text-xs sm:text-sm shadow-lg shadow-indigo-600/30 transition flex items-center justify-center gap-2"
+          >
+            <i data-lucide="check" class="w-4 h-4"></i>
+            <span>Salvar Nova Senha</span>
+          </button>
+
+          <button 
+            type="button" 
+            onclick="resetCredentialsToDefault(false)"
+            class="w-full py-2 px-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-amber-400 border border-slate-700 text-xs font-medium transition flex items-center justify-center gap-2"
+          >
+            <i data-lucide="refresh-cw" class="w-3.5 h-3.5"></i>
+            <span>Restaurar usuário padrão de fábrica</span>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- APPLICATION SCRIPT LOGIC -->
+  <script>
+    /* Default seed data */
+    const DEFAULT_SCRIPTS = [
+      {
+        id: "script-1",
+        title: "Instagram: Pegar WhatsApp (Lead Sem Sistema)",
+        tag: "Instagram",
+        objective: "Fazer o transbordo para o WhatsApp sem prometer material passivo",
+        content: "Olá, [Nome], tudo bem? Aqui é o Wellington, consultor de vendas.\n\nComo você ainda não usa um sistema, o primeiro passo é entender rapidinho a sua rotina para ver exatamente o que faz sentido automatizar no seu negócio.\n\nMe passa o seu WhatsApp com DDD? Eu te chamo por lá para combinarmos um horário rápido e eu te mostro a tela do sistema funcionando na prática. Pode ser?"
+      },
+      {
+        id: "script-2",
+        title: "WhatsApp: Abertura e Validação de Dor",
+        tag: "WhatsApp",
+        objective: "Iniciar contato e descobrir a dor principal antes de propor chamada",
+        content: "Oi, [Nome]! Wellington por aqui, falamos agorinha no Instagram.\n\nComo você me disse que ainda não usa sistema, me conta em uma frase: hoje o que mais te toma tempo ou te dá trabalho no controle do dia a dia?"
+      },
+      {
+        id: "script-3",
+        title: "WhatsApp: Agendamento Google Meet (Técnica Alternativa)",
+        tag: "Agendamento Meet",
+        objective: "Converter a dor em chamada rápida de 15 min oferecendo 2 opções de horário",
+        content: "Entendi perfeitamente, [Nome]. Isso é clássico e fácil de resolver.\n\nPara você não perder tempo e ver a solução de verdade, prefiro abrir a tela do sistema com você em uma chamada rápida de 15 minutos pelo Google Meet. Eu te mostro exatamente como resolver isso no seu dia a dia.\n\nO que fica melhor para você: amanhã pela manhã ou à tarde?"
+      },
+      {
+        id: "script-4",
+        title: "Objeção: 'Prefiro que você me mande um PDF ou Vídeo'",
+        tag: "Objeções",
+        objective: "Desviar do pedido de catálogo/PDF e reancorar o valor da demonstração ao vivo",
+        content: "Eu até poderia te mandar um PDF ou vídeo pronto, [Nome], mas nosso sistema tem módulos específicos para cada tipo de revenda.\n\nSe eu te mandar algo genérico, vai tomar mais do seu tempo lendo coisas que você nem vai usar. No Meet, em 10 minutinhos eu vou direto ao ponto do que você realmente precisa.\n\nBora dar essa olhada rápida amanhã às [Horário 1] ou [Horário 2]?"
+      },
+      {
+        id: "script-5",
+        title: "Lembrete 2h Antes do Google Meet",
+        tag: "Agendamento Meet",
+        objective: "Garantir comparecimento e reduzir taxa de no-show",
+        content: "Oi, [Nome]! Tudo pronto por aqui para nossa conversa rápida das [Horário].\n\nSegue o link do Google Meet para você entrar direto pelo celular ou computador:\n[Link_Meet]\n\nTe vejo lá em instantes!"
+      }
+    ];
+
+    const DEFAULT_KNOWLEDGE = [
+      {
+        id: "kb-1",
+        title: "Cliente com Menos de 1.000 Vendas por Mês",
+        tag: "Faixas de Vendas",
+        summary: "Abordagem enxuta com foco em controle de estoque e lucro real",
+        content: "Diagnóstico: Negócio em fase inicial ou crescimento acelerado, normalmente operando em cadernos ou planilhas confusas.\n\nFoco na Apresentação:\n1. Mostrar como registrar uma venda em menos de 10 segundos no PDV.\n2. Controle automático de estoque com alerta de reposição.\n3. Relatório diário de fechamento de caixa e lucro líquido.\n\nArgumento de Venda: 'Com o sistema rodando, você ganha pelo menos 2 horas livres todo dia e para de perder mercadoria sem perceber.'"
+      },
+      {
+        id: "kb-2",
+        title: "Cliente com Mais de 1.000 Vendas por Mês",
+        tag: "Faixas de Vendas",
+        summary: "Foco em velocidade de atendimento, frente de caixa e antifraude",
+        content: "Diagnóstico: Operação com volume alto de clientes, filas ou múltiplos vendedores/caixas.\n\nFoco na Apresentação:\n1. Alta velocidade de leitura de código de barras e emissão fiscal automática.\n2. Permissões de usuários (o operador não altera preços sem autorização do gerente).\n3. DRE e curva ABC de produtos mais rentáveis.\n\nArgumento de Venda: 'No seu volume, cada minuto de fila perdida ou erro de precificação custa caro. O sistema garante precisão sem travar o caixa.'"
+      },
+      {
+        id: "kb-3",
+        title: "Emissão de Nota Fiscal (NF-e e NFC-e)",
+        tag: "Fiscal & NF-e",
+        summary: "Requisitos técnicos e passo a passo para emissão no sistema",
+        content: "Requisitos Obrigatórios:\n1. Certificado Digital modelo A1 (arquivo .pfx ou .p12 instalado).\n2. Credenciamento ativo na SEFAZ do estado do cliente.\n3. Código CSC e Token fornecidos pela contabilidade (para NFC-e).\n\nProcedimento no Sistema:\n- Menu Configurações > Módulo Fiscal > Subir Certificado A1 e digitar a senha.\n- Preencher alíquotas padrão orientadas pelo contador.\n- Na tela de vendas, clicar em 'Emitir Nota' ou deixar na emissão automática ao concluir o pagamento."
+      },
+      {
+        id: "kb-4",
+        title: "Rotina de Caixa: Abertura, Sangria e Fechamento",
+        tag: "Estoque & Caixa",
+        summary: "Como instruir o operador a manter o caixa 100% batido",
+        content: "Abertura: Inserir o valor do troco inicial (fundo de caixa).\n\nDurante o Dia:\n- Para saídas de valores (ex: pagar fornecedor na porta), usar a função 'Sangria' com justificativa obrigatória.\n- Para entradas manuais, usar 'Suprimento'.\n\nFechamento:\n- Clicar em 'Fechar Caixa' e conferir valores de Dinheiro, Cartão e PIX. O sistema gera relatório comparativo entre o esperado e o apurado."
+      }
+    ];
+
+    /* Storage Helpers with fallbacks */
+    function safeStorageGet(key, defaultVal) {
+      try {
+        const item = localStorage.getItem(key);
+        return item ? JSON.parse(item) : defaultVal;
+      } catch (e) {
+        console.warn(`Aviso de leitura em '${key}':`, e);
+        return defaultVal;
+      }
+    }
+
+    function safeStorageSet(key, val) {
+      try {
+        localStorage.setItem(key, JSON.stringify(val));
+        return true;
+      } catch (e) {
+        console.error(`Erro de escrita em '${key}':`, e);
+        return false;
+      }
+    }
+
+    /* State Initialization */
+    let scripts = safeStorageGet("ri_scripts", DEFAULT_SCRIPTS);
+    let knowledge = safeStorageGet("ri_knowledge", DEFAULT_KNOWLEDGE);
+    let currentUser = safeStorageGet("ri_active_session", null);
+    let currentView = 'home';
+    let currentScriptFilter = 'Todos';
+    let currentKnowledgeFilter = 'Todos';
+    let tempAvatarBase64 = null;
+
+    /* Initialize Default Credentials if empty */
+    const existingCreds = safeStorageGet("ri_user_credentials", null);
+    if (!existingCreds) {
+      safeStorageSet("ri_user_credentials", {
+        name: "Wellington",
+        email: "consultor@baseconhecimento.com",
+        password: "senha123",
+        avatarUrl: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=200&h=200&q=80"
+      });
+    }
+
+    /* Core lifecycle */
+    window.onload = function() {
+      if (currentUser && currentUser.email) {
+        showDashboard();
+      } else {
+        showAuth();
+      }
+      lucide.createIcons();
+    };
+
+    function showAuth() {
+      document.getElementById("authView").classList.remove("hidden");
+      document.getElementById("dashboardView").classList.add("hidden");
+      lucide.createIcons();
+    }
+
+    function showDashboard() {
+      document.getElementById("authView").classList.add("hidden");
+      document.getElementById("dashboardView").classList.remove("hidden");
+      updateGreetingAndUserUI();
+      navigateToView('home');
+      lucide.createIcons();
+    }
+
+    /* Navigation */
+    function navigateToView(view) {
+      currentView = view;
+      const homeSec = document.getElementById("portalHomeView");
+      const scriptsSec = document.getElementById("sectionScriptsView");
+      const knowledgeSec = document.getElementById("sectionKnowledgeView");
+      const breadcrumb = document.getElementById("navBreadcrumb");
+
+      homeSec.classList.add("hidden");
+      scriptsSec.classList.add("hidden");
+      knowledgeSec.classList.add("hidden");
+
+      if (view === 'home') {
+        homeSec.classList.remove("hidden");
+        breadcrumb.innerHTML = "<span>Início</span>";
+        updateGreetingAndUserUI();
+      } else if (view === 'scripts') {
+        scriptsSec.classList.remove("hidden");
+        breadcrumb.innerHTML = "<button type='button' onclick=\"navigateToView('home')\" class='hover:text-white transition'>Início</button><span>/</span><span class='text-indigo-400 font-semibold'>Scripts de Atendimento</span>";
+        renderScriptFilterTags();
+        renderScripts();
+      } else if (view === 'knowledge') {
+        knowledgeSec.classList.remove("hidden");
+        breadcrumb.innerHTML = "<button type='button' onclick=\"navigateToView('home')\" class='hover:text-white transition'>Início</button><span>/</span><span class='text-emerald-400 font-semibold'>Base de Conhecimento</span>";
+        renderKnowledgeFilterTags();
+        renderKnowledgeArticles();
+      }
+
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      lucide.createIcons();
+    }
+
+    /* Greeting & User Interface Sync */
+    function updateGreetingAndUserUI() {
+      const now = new Date();
+      const hour = now.getHours();
+
+      let greeting = "Olá";
+      if (hour >= 5 && hour < 12) {
+        greeting = "Bom dia";
+      } else if (hour >= 12 && hour < 18) {
+        greeting = "Boa tarde";
+      } else {
+        greeting = "Boa noite";
+      }
+
+      const greetingEl = document.getElementById("greetingTimeText");
+      if (greetingEl) greetingEl.textContent = greeting;
+      
+      const options = { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' };
+      const dateFormatted = now.toLocaleDateString('pt-BR', options);
+      const dateEl = document.getElementById("welcomeDateFull");
+      if (dateEl) dateEl.textContent = dateFormatted.charAt(0).toUpperCase() + dateFormatted.slice(1);
+
+      const userName = (currentUser && currentUser.name) ? currentUser.name : "Wellington";
+      const welcomeNameEl = document.getElementById("welcomeUserName");
+      const topNameEl = document.getElementById("topUserName");
+      if (welcomeNameEl) welcomeNameEl.textContent = userName;
+      if (topNameEl) topNameEl.textContent = userName;
+
+      const avatar = (currentUser && currentUser.avatarUrl) ? currentUser.avatarUrl : "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=200&h=200&q=80";
+      updateAvatarElements(avatar);
+
+      const scriptBadge = document.getElementById("homeScriptsCounterBadge");
+      const kbBadge = document.getElementById("homeKnowledgeCounterBadge");
+      if (scriptBadge) scriptBadge.textContent = scripts.length + " scripts prontos";
+      if (kbBadge) kbBadge.textContent = knowledge.length + " guias operacionais";
+    }
+
+    function updateAvatarElements(avatarUrl) {
+      if (!avatarUrl) return;
+      const welcomeImg = document.getElementById("welcomeAvatarImg");
+      const userImg = document.getElementById("userAvatarImg");
+      const modalImg = document.getElementById("modalAvatarPreview");
+
+      if (welcomeImg) welcomeImg.src = avatarUrl;
+      if (userImg) userImg.src = avatarUrl;
+      if (modalImg) modalImg.src = avatarUrl;
+    }
+
+    /* Auth Actions */
+    function switchAuthTab(mode) {
+      const tabLogin = document.getElementById("tabLoginBtn");
+      const tabReg = document.getElementById("tabRegisterBtn");
+      const formLogin = document.getElementById("loginForm");
+      const formReg = document.getElementById("registerForm");
+
+      if (mode === 'login') {
+        tabLogin.className = "flex-1 py-2 text-xs font-semibold rounded-lg transition text-white bg-indigo-600 shadow-sm";
+        tabReg.className = "flex-1 py-2 text-xs font-semibold rounded-lg transition text-slate-400 hover:text-slate-200";
+        formLogin.classList.remove("hidden");
+        formReg.classList.add("hidden");
+      } else {
+        tabReg.className = "flex-1 py-2 text-xs font-semibold rounded-lg transition text-white bg-indigo-600 shadow-sm";
+        tabLogin.className = "flex-1 py-2 text-xs font-semibold rounded-lg transition text-slate-400 hover:text-slate-200";
+        formReg.classList.remove("hidden");
+        formLogin.classList.add("hidden");
+      }
+      lucide.createIcons();
+    }
+
+    function fillDemoCredentials() {
+      const stored = safeStorageGet("ri_user_credentials", {});
+      document.getElementById("loginEmail").value = stored.email || "consultor@baseconhecimento.com";
+      document.getElementById("loginPassword").value = stored.password || "senha123";
+      showToast("Dados do perfil atual preenchidos!", "info");
+    }
+
+    function togglePasswordVisibility(inputId, iconId) {
+      const input = document.getElementById(inputId);
+      const icon = document.getElementById(iconId);
+      if (!input || !icon) return;
+      if (input.type === "password") {
+        input.type = "text";
+        icon.setAttribute("data-lucide", "eye-off");
+      } else {
+        input.type = "password";
+        icon.setAttribute("data-lucide", "eye");
+      }
+      lucide.createIcons();
+    }
+
+    function handleLogin(e) {
+      e.preventDefault();
+      const email = document.getElementById("loginEmail").value.trim().toLowerCase();
+      const pass = document.getElementById("loginPassword").value;
+      const stored = safeStorageGet("ri_user_credentials", {});
+
+      if (stored.email && stored.email.toLowerCase() === email && stored.password === pass) {
+        currentUser = {
+          name: stored.name || "Wellington",
+          email: stored.email,
+          avatarUrl: stored.avatarUrl || "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=200&h=200&q=80"
+        };
+        safeStorageSet("ri_active_session", currentUser);
+        showToast("Bem-vindo, " + currentUser.name + "!", "success");
+        showDashboard();
+      } else {
+        showToast("E-mail ou senha incorretos.", "error");
+      }
+    }
+
+    function handleRegister(e) {
+      e.preventDefault();
+      const name = document.getElementById("regName").value.trim();
+      const email = document.getElementById("regEmail").value.trim().toLowerCase();
+      const pass = document.getElementById("regPassword").value;
+
+      if (!name || !email || !pass) {
+        showToast("Preencha todos os campos para cadastrar.", "error");
+        return;
+      }
+
+      const newUser = {
+        name: name,
+        email: email,
+        password: pass,
+        avatarUrl: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=200&h=200&q=80"
+      };
+
+      safeStorageSet("ri_user_credentials", newUser);
+      currentUser = { name: newUser.name, email: newUser.email, avatarUrl: newUser.avatarUrl };
+      safeStorageSet("ri_active_session", currentUser);
+
+      showToast("Conta criada com sucesso!", "success");
+      showDashboard();
+    }
+
+    function handleLogout() {
+      try {
+        localStorage.removeItem("ri_active_session");
+      } catch (err) {}
+      currentUser = null;
+      showToast("Sessão finalizada com sucesso.", "info");
+      showAuth();
+    }
+
+    /* Forgot Password & Reset */
+    function openForgotPasswordModal() {
+      const stored = safeStorageGet("ri_user_credentials", {});
+      const emailField = document.getElementById("forgotEmailInput");
+      const passField = document.getElementById("forgotNewPasswordInput");
+
+      emailField.value = document.getElementById("loginEmail").value.trim() || stored.email || "";
+      passField.value = "";
+      
+      const hint = document.getElementById("forgotEmailHint");
+      if (stored.email) {
+        hint.textContent = "E-mail registrado no navegador: " + stored.email;
+      } else {
+        hint.textContent = "Nenhum usuário salvo ainda. Você pode restaurar o padrão.";
+      }
+
+      document.getElementById("forgotPasswordModal").classList.remove("hidden");
+      lucide.createIcons();
+    }
+
+    function closeForgotPasswordModal() {
+      document.getElementById("forgotPasswordModal").classList.add("hidden");
+    }
+
+    function handleResetPasswordSubmit(e) {
+      e.preventDefault();
+      const emailTyped = document.getElementById("forgotEmailInput").value.trim().toLowerCase();
+      const newPassword = document.getElementById("forgotNewPasswordInput").value;
+      const stored = safeStorageGet("ri_user_credentials", {});
+
+      if (!stored.email) {
+        showToast("Nenhum usuário configurado. Restaurando padrão...", "info");
+        resetCredentialsToDefault(false);
+        closeForgotPasswordModal();
+        return;
+      }
+
+      if (stored.email.toLowerCase() !== emailTyped) {
+        showToast("E-mail não coincide com o registrado.", "error");
+        return;
+      }
+
+      stored.password = newPassword;
+      safeStorageSet("ri_user_credentials", stored);
+
+      document.getElementById("loginEmail").value = stored.email;
+      document.getElementById("loginPassword").value = newPassword;
+
+      closeForgotPasswordModal();
+      showToast("Senha redefinida com sucesso! Você já pode entrar.", "success");
+    }
+
+    function resetCredentialsToDefault(clearCompletely) {
+      if (clearCompletely) {
+        const confirmClear = confirm("Deseja apagar os dados de acesso e criar um novo perfil do zero agora?");
+        if (!confirmClear) return;
+
+        try {
+          localStorage.removeItem("ri_user_credentials");
+          localStorage.removeItem("ri_active_session");
+        } catch (err) {}
+
+        document.getElementById("loginEmail").value = "";
+        document.getElementById("loginPassword").value = "";
+        document.getElementById("regName").value = "";
+        document.getElementById("regEmail").value = "";
+        document.getElementById("regPassword").value = "";
+
+        switchAuthTab('register');
+        showToast("Credenciais zeradas! Digite seus dados na aba 'Criar Acesso'.", "info");
+        return;
+      }
+
+      const factoryUser = {
+        name: "Wellington",
+        email: "consultor@baseconhecimento.com",
+        password: "senha123",
+        avatarUrl: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=200&h=200&q=80"
+      };
+
+      safeStorageSet("ri_user_credentials", factoryUser);
+      document.getElementById("loginEmail").value = factoryUser.email;
+      document.getElementById("loginPassword").value = factoryUser.password;
+
+      closeForgotPasswordModal();
+      showToast("Acesso restaurado: consultor@baseconhecimento.com / senha123", "success");
+    }
+
+    /* Profile Modal & Image Compressor */
+    function triggerAvatarUpload() {
+      document.getElementById("profileImageFileInput").click();
+    }
+
+    function compressImageFile(file, maxWidth, maxHeight, quality) {
+      maxWidth = maxWidth || 300;
+      maxHeight = maxHeight || 300;
+      quality = quality || 0.85;
+
+      return new Promise(function(resolve, reject) {
+        const reader = new FileReader();
+        reader.onerror = reject;
+        reader.onload = function(readerEvent) {
+          const img = new Image();
+          img.onerror = reject;
+          img.onload = function() {
+            let width = img.width;
+            let height = img.height;
+
+            if (width > height) {
+              if (width > maxWidth) {
+                height = Math.round((height * maxWidth) / width);
+                width = maxWidth;
+              }
+            } else {
+              if (height > maxHeight) {
+                width = Math.round((width * maxHeight) / height);
+                height = maxHeight;
+              }
+            }
+
+            const canvas = document.createElement("canvas");
+            canvas.width = width;
+            canvas.height = height;
+
+            const ctx = canvas.getContext("2d");
+            ctx.drawImage(img, 0, 0, width, height);
+
+            const compressedDataUrl = canvas.toDataURL("image/jpeg", quality);
+            resolve(compressedDataUrl);
+          };
+          img.src = readerEvent.target.result;
+        };
+        reader.readAsDataURL(file);
+      });
+    }
+
+    async function handleProfileImageSelect(event) {
+      const file = event.target.files && event.target.files[0];
+      if (!file) return;
+
+      if (!file.type || !file.type.startsWith("image/")) {
+        showToast("Por favor, selecione um arquivo de imagem válido.", "error");
+        return;
+      }
+
+      showToast("Otimizando foto do seu dispositivo...", "info");
+
+      try {
+        const optimizedBase64 = await compressImageFile(file, 300, 300, 0.85);
+        tempAvatarBase64 = optimizedBase64;
+
+        document.getElementById("modalAvatarPreview").src = optimizedBase64;
+
+        if (currentUser) {
+          currentUser.avatarUrl = optimizedBase64;
+          safeStorageSet("ri_active_session", currentUser);
+
+          const stored = safeStorageGet("ri_user_credentials", {});
+          stored.avatarUrl = optimizedBase64;
+          safeStorageSet("ri_user_credentials", stored);
+
+          updateAvatarElements(optimizedBase64);
+        }
+
+        showToast("Foto salva com sucesso!", "success");
+      } catch (err) {
+        console.error("Erro ao processar imagem:", err);
+        showToast("Não foi possível carregar esta imagem. Tente outra foto.", "error");
+      }
+    }
+
+    function removeProfileImage() {
+      const defaultAvatar = "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=200&h=200&q=80";
+      tempAvatarBase64 = defaultAvatar;
+      document.getElementById("modalAvatarPreview").src = defaultAvatar;
+      document.getElementById("profileImageFileInput").value = "";
+
+      if (currentUser) {
+        currentUser.avatarUrl = defaultAvatar;
+        safeStorageSet("ri_active_session", currentUser);
+
+        const stored = safeStorageGet("ri_user_credentials", {});
+        stored.avatarUrl = defaultAvatar;
+        safeStorageSet("ri_user_credentials", stored);
+
+        updateAvatarElements(defaultAvatar);
+      }
+      showToast("Avatar restaurado para o padrão.", "info");
+    }
+
+    function openProfileModal() {
+      document.getElementById("profileNameInput").value = (currentUser && currentUser.name) ? currentUser.name : "Wellington";
+      document.getElementById("profileEmailInput").value = (currentUser && currentUser.email) ? currentUser.email : "";
+      const currentAvatar = (currentUser && currentUser.avatarUrl) ? currentUser.avatarUrl : "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=200&h=200&q=80";
+      document.getElementById("modalAvatarPreview").src = currentAvatar;
+      tempAvatarBase64 = currentAvatar;
+      document.getElementById("profileImageFileInput").value = "";
+      document.getElementById("profilePasswordInput").value = "";
+      document.getElementById("profileModal").classList.remove("hidden");
+      lucide.createIcons();
+    }
+
+    function closeProfileModal() {
+      document.getElementById("profileModal").classList.add("hidden");
+    }
+
+    function handleSaveProfile(e) {
+      e.preventDefault();
+      const name = document.getElementById("profileNameInput").value.trim();
+      const email = document.getElementById("profileEmailInput").value.trim().toLowerCase();
+      const newPassword = document.getElementById("profilePasswordInput").value;
+
+      const stored = safeStorageGet("ri_user_credentials", {});
+      stored.name = name;
+      stored.email = email;
+      if (tempAvatarBase64) {
+        stored.avatarUrl = tempAvatarBase64;
+      }
+      if (newPassword && newPassword.length >= 6) {
+        stored.password = newPassword;
+      }
+
+      safeStorageSet("ri_user_credentials", stored);
+      currentUser = { name: name, email: email, avatarUrl: stored.avatarUrl };
+      safeStorageSet("ri_active_session", currentUser);
+
+      updateGreetingAndUserUI();
+      closeProfileModal();
+      showToast("Perfil salvo com sucesso!", "success");
+    }
+
+    /* Scripts Playbook Logic */
+    const SCRIPT_CATEGORIES = ["Todos", "Instagram", "WhatsApp", "Agendamento Meet", "Objeções", "Follow-up"];
+
+    function renderScriptFilterTags() {
+      const container = document.getElementById("filterScriptTagsBar");
+      if (!container) return;
+      container.innerHTML = SCRIPT_CATEGORIES.map(function(cat) {
+        const isActive = currentScriptFilter === cat;
+        const activeClass = "bg-indigo-600 text-white border-indigo-500 shadow-md shadow-indigo-600/20";
+        const inactiveClass = "bg-slate-950 text-slate-400 border-slate-800 hover:border-slate-700 hover:text-slate-200";
+        return '<button type="button" onclick="setScriptFilter(\'' + cat + '\')" class="px-3 py-1.5 rounded-xl text-xs font-semibold whitespace-nowrap transition border ' + (isActive ? activeClass : inactiveClass) + '">' + cat + '</button>';
+      }).join('');
+    }
+
+    function setScriptFilter(cat) {
+      currentScriptFilter = cat;
+      renderScriptFilterTags();
+      renderScripts();
+    }
+
+    function renderScripts() {
+      const searchInput = document.getElementById("searchScriptInput");
+      const search = (searchInput && searchInput.value ? searchInput.value : "").toLowerCase();
+      const grid = document.getElementById("scriptsGrid");
+      if (!grid) return;
+
+      const filtered = scripts.filter(function(s) {
+        const matchTag = currentScriptFilter === "Todos" || s.tag === currentScriptFilter;
+        const matchSearch = (s.title && s.title.toLowerCase().includes(search)) || 
+                            (s.content && s.content.toLowerCase().includes(search)) ||
+                            (s.objective && s.objective.toLowerCase().includes(search));
+        return matchTag && matchSearch;
+      });
+
+      if (filtered.length === 0) {
+        grid.innerHTML = '<div class="col-span-full py-16 text-center bg-slate-900/40 border border-dashed border-slate-800 rounded-3xl p-8">' +
+          '<i data-lucide="file-question" class="w-10 h-10 text-slate-600 mx-auto mb-3"></i>' +
+          '<p class="text-base font-medium text-slate-400">Nenhum script encontrado.</p>' +
+          '<button type="button" onclick="openScriptModal()" class="mt-4 px-5 py-2.5 rounded-xl bg-indigo-600 text-white font-semibold text-sm hover:bg-indigo-500 transition flex items-center gap-2 mx-auto">' +
+          '<i data-lucide="plus-circle" class="w-4 h-4"></i><span>Adicionar Primeiro Script</span></button></div>';
+        lucide.createIcons();
+        return;
+      }
+
+      grid.innerHTML = filtered.map(function(item) {
+        const tagColors = getScriptTagColor(item.tag);
+        return '<div class="bg-slate-900/95 border border-slate-800/90 hover:border-slate-700 rounded-3xl p-6 sm:p-8 flex flex-col justify-between transition-all duration-200 hover:shadow-2xl">' +
+          '<div>' +
+            '<div class="flex items-center justify-between gap-2 mb-4">' +
+              '<span class="text-xs font-semibold px-3 py-1 rounded-lg border ' + tagColors + '">' + escapeHtml(item.tag) + '</span>' +
+              '<div class="flex items-center gap-2">' +
+                '<button type="button" onclick="editScript(\'' + item.id + '\')" title="Editar script" class="p-2 rounded-xl bg-slate-800 hover:bg-indigo-600 text-slate-400 hover:text-white border border-slate-700 transition"><i data-lucide="pencil" class="w-4 h-4"></i></button>' +
+                '<button type="button" onclick="deleteScript(\'' + item.id + '\')" title="Excluir script" class="p-2 rounded-xl bg-slate-800 hover:bg-rose-600 text-slate-400 hover:text-white border border-slate-700 transition"><i data-lucide="trash-2" class="w-4 h-4"></i></button>' +
+              '</div>' +
+            '</div>' +
+            '<h3 class="font-bold text-white text-lg sm:text-xl leading-snug mb-2.5">' + escapeHtml(item.title) + '</h3>' +
+            '<p class="text-sm sm:text-[15px] text-slate-400 mb-5 leading-normal">' + escapeHtml(item.objective || '') + '</p>' +
+            '<div class="bg-slate-950/90 border border-slate-800 rounded-2xl p-6 text-base sm:text-[16px] text-slate-200 font-normal leading-relaxed whitespace-pre-line mb-6 select-all select-text shadow-inner tracking-wide">' + escapeHtml(item.content) + '</div>' +
+          '</div>' +
+          '<button type="button" onclick="copyScriptToClipboard(this, \'' + item.id + '\')" class="w-full flex items-center justify-center gap-2.5 py-4 px-5 rounded-2xl text-base font-semibold bg-slate-800 hover:bg-indigo-600 text-white border border-slate-700 hover:border-indigo-500 transition-all duration-150 active:scale-[0.98] shadow-md">' +
+            '<i data-lucide="copy" class="w-5 h-5 text-slate-300"></i><span>Copiar Script</span>' +
+          '</button>' +
+        '</div>';
+      }).join('');
+
+      lucide.createIcons();
+    }
+
+    function getScriptTagColor(tag) {
+      switch(tag) {
+        case 'Instagram':
+          return 'bg-pink-500/10 text-pink-400 border-pink-500/20';
+        case 'WhatsApp':
+          return 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20';
+        case 'Agendamento Meet':
+          return 'bg-blue-500/10 text-blue-400 border-blue-500/20';
+        case 'Objeções':
+          return 'bg-amber-500/10 text-amber-400 border-amber-500/20';
+        default:
+          return 'bg-indigo-500/10 text-indigo-400 border-indigo-500/20';
+      }
+    }
+
+    function copyScriptToClipboard(button, scriptId) {
+      const script = scripts.find(function(s) { return s.id === scriptId; });
+      if (!script) return;
+
+      const originalHtml = button.innerHTML;
+
+      function successFeedback() {
+        button.classList.remove('bg-slate-800/90', 'hover:bg-indigo-600');
+        button.classList.add('bg-emerald-600');
+        button.innerHTML = '<i data-lucide="check" class="w-3.5 h-3.5"></i><span>Copiado com Sucesso!</span>';
+        lucide.createIcons();
+        showToast("Script copiado! Cole no WhatsApp ou Instagram.", "success");
+
+        setTimeout(function() {
+          button.classList.remove('bg-emerald-600');
+          button.classList.add('bg-slate-800/90', 'hover:bg-indigo-600');
+          button.innerHTML = originalHtml;
+          lucide.createIcons();
+        }, 1500);
+      }
+
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(script.content)
+          .then(successFeedback)
+          .catch(function() { fallbackCopy(script.content, successFeedback); });
+      } else {
+        fallbackCopy(script.content, successFeedback);
+      }
+    }
+
+    function openScriptModal(script) {
+      const modal = document.getElementById("scriptModal");
+      const title = document.getElementById("modalScriptTitleHeader");
+      const idInput = document.getElementById("modalScriptId");
+      const titleInput = document.getElementById("modalScriptTitle");
+      const tagInput = document.getElementById("modalScriptTag");
+      const objectiveInput = document.getElementById("modalScriptObjective");
+      const contentInput = document.getElementById("modalScriptContent");
+
+      if (script) {
+        title.textContent = "Editar Script de Vendas";
+        idInput.value = script.id;
+        titleInput.value = script.title;
+        tagInput.value = script.tag;
+        objectiveInput.value = script.objective || "";
+        contentInput.value = script.content;
+      } else {
+        title.textContent = "Criar Novo Script";
+        idInput.value = "";
+        titleInput.value = "";
+        tagInput.value = currentScriptFilter !== "Todos" ? currentScriptFilter : "Instagram";
+        objectiveInput.value = "";
+        contentInput.value = "";
+      }
+
+      modal.classList.remove("hidden");
+      lucide.createIcons();
+    }
+
+    function closeScriptModal() {
+      document.getElementById("scriptModal").classList.add("hidden");
+    }
+
+    function handleSaveScript(e) {
+      e.preventDefault();
+      const id = document.getElementById("modalScriptId").value;
+      const title = document.getElementById("modalScriptTitle").value.trim();
+      const tag = document.getElementById("modalScriptTag").value;
+      const objective = document.getElementById("modalScriptObjective").value.trim();
+      const content = document.getElementById("modalScriptContent").value.trim();
+
+      if (!title || !content) {
+        showToast("Preencha título e conteúdo do script.", "error");
+        return;
+      }
+
+      if (id) {
+        const index = scripts.findIndex(function(s) { return s.id === id; });
+        if (index !== -1) {
+          scripts[index] = { id: id, title: title, tag: tag, objective: objective, content: content };
+          showToast("Script atualizado!", "success");
+        }
+      } else {
+        const newScript = {
+          id: "script-" + Date.now(),
+          title: title,
+          tag: tag,
+          objective: objective,
+          content: content
+        };
+        scripts.unshift(newScript);
+        showToast("Novo script adicionado!", "success");
+      }
+
+      safeStorageSet("ri_scripts", scripts);
+      closeScriptModal();
+      renderScripts();
+    }
+
+    function editScript(id) {
+      const script = scripts.find(function(s) { return s.id === id; });
+      if (script) openScriptModal(script);
+    }
+
+    function deleteScript(id) {
+      const script = scripts.find(function(s) { return s.id === id; });
+      if (!script) return;
+      if (confirm('Deseja excluir o script "' + script.title + '"?')) {
+        scripts = scripts.filter(function(s) { return s.id !== id; });
+        safeStorageSet("ri_scripts", scripts);
+        renderScripts();
+        showToast("Script removido.", "info");
+      }
+    }
+
+    /* Knowledge Base Section Logic */
+    const KNOWLEDGE_CATEGORIES = ["Todos", "Fiscal & NF-e", "Faixas de Vendas", "Suporte do Dia a Dia", "Estoque & Caixa", "Regras de Negócio"];
+
+    function renderKnowledgeFilterTags() {
+      const container = document.getElementById("filterKnowledgeTagsBar");
+      if (!container) return;
+      container.innerHTML = KNOWLEDGE_CATEGORIES.map(function(cat) {
+        const isActive = currentKnowledgeFilter === cat;
+        const activeClass = "bg-emerald-600 text-white border-emerald-500 shadow-md shadow-emerald-600/20";
+        const inactiveClass = "bg-slate-950 text-slate-400 border-slate-800 hover:border-slate-700 hover:text-slate-200";
+        return '<button type="button" onclick="setKnowledgeFilter(\'' + cat + '\')" class="px-3 py-1.5 rounded-xl text-xs font-semibold whitespace-nowrap transition border ' + (isActive ? activeClass : inactiveClass) + '">' + cat + '</button>';
+      }).join('');
+    }
+
+    function setKnowledgeFilter(cat) {
+      currentKnowledgeFilter = cat;
+      renderKnowledgeFilterTags();
+      renderKnowledgeArticles();
+    }
+
+    function renderKnowledgeArticles() {
+      const searchInput = document.getElementById("searchKnowledgeInput");
+      const search = (searchInput && searchInput.value ? searchInput.value : "").toLowerCase();
+      const grid = document.getElementById("knowledgeGrid");
+      if (!grid) return;
+
+      const filtered = knowledge.filter(function(k) {
+        const matchTag = currentKnowledgeFilter === "Todos" || k.tag === currentKnowledgeFilter;
+        const matchSearch = (k.title && k.title.toLowerCase().includes(search)) || 
+                            (k.content && k.content.toLowerCase().includes(search)) ||
+                            (k.summary && k.summary.toLowerCase().includes(search));
+        return matchTag && matchSearch;
+      });
+
+      if (filtered.length === 0) {
+        grid.innerHTML = '<div class="col-span-full py-16 text-center bg-slate-900/40 border border-dashed border-slate-800 rounded-3xl p-8">' +
+          '<i data-lucide="help-circle" class="w-10 h-10 text-slate-600 mx-auto mb-3"></i>' +
+          '<p class="text-base font-medium text-slate-400">Nenhum artigo encontrado para esta busca.</p>' +
+          '<button type="button" onclick="openKnowledgeModal()" class="mt-4 px-5 py-2.5 rounded-xl bg-emerald-600 text-white font-semibold text-sm hover:bg-emerald-500 transition flex items-center gap-2 mx-auto">' +
+          '<i data-lucide="plus-circle" class="w-4 h-4"></i><span>Cadastrar Nova Solução</span></button></div>';
+        lucide.createIcons();
+        return;
+      }
+
+      grid.innerHTML = filtered.map(function(item) {
+        return '<div class="bg-slate-900/95 border border-slate-800/90 hover:border-slate-700 rounded-3xl p-6 sm:p-7 flex flex-col justify-between transition-all duration-200 hover:shadow-2xl">' +
+          '<div>' +
+            '<div class="flex items-center justify-between gap-2 mb-4">' +
+              '<span class="text-xs font-semibold px-3 py-1 rounded-lg border bg-emerald-500/10 text-emerald-400 border-emerald-500/20">' + escapeHtml(item.tag) + '</span>' +
+              '<div class="flex items-center gap-1.5">' +
+                '<button type="button" onclick="editKnowledge(\'' + item.id + '\')" title="Editar este artigo" class="p-1.5 rounded-lg bg-slate-800/80 hover:bg-emerald-600 text-slate-400 hover:text-white border border-slate-700/60 transition"><i data-lucide="pencil" class="w-3.5 h-3.5"></i></button>' +
+                '<button type="button" onclick="deleteKnowledge(\'' + item.id + '\')" title="Excluir este artigo" class="p-1.5 rounded-lg bg-slate-800/80 hover:bg-rose-600 text-slate-400 hover:text-white border border-slate-700/60 transition"><i data-lucide="trash-2" class="w-3.5 h-3.5"></i></button>' +
+              '</div>' +
+            '</div>' +
+            '<h3 class="font-bold text-white text-base sm:text-lg leading-snug mb-2">' + escapeHtml(item.title) + '</h3>' +
+            '<p class="text-sm text-slate-400 mb-5 font-medium flex items-center gap-2"><i data-lucide="info" class="w-4 h-4 text-emerald-400 shrink-0"></i><span>' + escapeHtml(item.summary || '') + '</span></p>' +
+            '<div class="bg-slate-950/90 border border-slate-800 rounded-2xl p-5 text-sm sm:text-[15px] text-slate-200 font-normal leading-relaxed whitespace-pre-line mb-6 border-l-4 border-l-emerald-500 select-all select-text shadow-inner tracking-wide">' + escapeHtml(item.content) + '</div>' +
+          '</div>' +
+          '<div class="pt-2 flex items-center justify-between gap-2">' +
+            '<span class="text-xs text-slate-500">Instrução para envio ou suporte</span>' +
+            '<button type="button" onclick="copyKnowledgeInstructions(this, \'' + item.id + '\')" class="px-5 py-3 rounded-2xl text-sm font-semibold bg-slate-800/90 hover:bg-emerald-600 text-white border border-slate-700 hover:border-emerald-500 transition active:scale-95 flex items-center gap-2 shadow-md">' +
+              '<i data-lucide="copy" class="w-4 h-4 text-emerald-400"></i><span>Copiar Solução</span>' +
+            '</button>' +
+          '</div>' +
+        '</div>';
+      }).join('');
+
+      lucide.createIcons();
+    }
+
+    function copyKnowledgeInstructions(button, id) {
+      const item = knowledge.find(function(k) { return k.id === id; });
+      if (!item) return;
+
+      const originalHtml = button.innerHTML;
+      function successFeedback() {
+        button.classList.remove('bg-slate-800/90', 'hover:bg-emerald-600');
+        button.classList.add('bg-emerald-600');
+        button.innerHTML = '<i data-lucide="check" class="w-3.5 h-3.5"></i><span>Copiado!</span>';
+        lucide.createIcons();
+        showToast("Instrução copiada para o suporte!", "success");
+
+        setTimeout(function() {
+          button.classList.remove('bg-emerald-600');
+          button.classList.add('bg-slate-800/90', 'hover:bg-emerald-600');
+          button.innerHTML = originalHtml;
+          lucide.createIcons();
+        }, 1500);
+      }
+
+      const fullText = item.title + "\n\n" + item.summary + "\n\n" + item.content;
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(fullText)
+          .then(successFeedback)
+          .catch(function() { fallbackCopy(fullText, successFeedback); });
+      } else {
+        fallbackCopy(fullText, successFeedback);
+      }
+    }
+
+    function openKnowledgeModal(item) {
+      const modal = document.getElementById("knowledgeModal");
+      const titleHeader = document.getElementById("modalKnowledgeHeader");
+      const idInput = document.getElementById("modalKnowledgeId");
+      const titleInput = document.getElementById("modalKnowledgeTitle");
+      const tagInput = document.getElementById("modalKnowledgeTag");
+      const summaryInput = document.getElementById("modalKnowledgeSummary");
+      const contentInput = document.getElementById("modalKnowledgeContent");
+
+      if (item) {
+        titleHeader.textContent = "Editar Regra / Dúvida";
+        idInput.value = item.id;
+        titleInput.value = item.title;
+        tagInput.value = item.tag;
+        summaryInput.value = item.summary || "";
+        contentInput.value = item.content;
+      } else {
+        titleHeader.textContent = "Nova Regra / Dúvida de Suporte";
+        idInput.value = "";
+        titleInput.value = "";
+        tagInput.value = currentKnowledgeFilter !== "Todos" ? currentKnowledgeFilter : "Fiscal & NF-e";
+        summaryInput.value = "";
+        contentInput.value = "";
+      }
+
+      modal.classList.remove("hidden");
+      lucide.createIcons();
+    }
+
+    function closeKnowledgeModal() {
+      document.getElementById("knowledgeModal").classList.add("hidden");
+    }
+
+    function handleSaveKnowledge(e) {
+      e.preventDefault();
+      const id = document.getElementById("modalKnowledgeId").value;
+      const title = document.getElementById("modalKnowledgeTitle").value.trim();
+      const tag = document.getElementById("modalKnowledgeTag").value;
+      const summary = document.getElementById("modalKnowledgeSummary").value.trim();
+      const content = document.getElementById("modalKnowledgeContent").value.trim();
+
+      if (!title || !content) {
+        showToast("Preencha o título e as instruções da solução.", "error");
+        return;
+      }
+
+      if (id) {
+        const index = knowledge.findIndex(function(k) { return k.id === id; });
+        if (index !== -1) {
+          knowledge[index] = { id: id, title: title, tag: tag, summary: summary, content: content };
+          showToast("Artigo atualizado!", "success");
+        }
+      } else {
+        const newItem = {
+          id: "kb-" + Date.now(),
+          title: title,
+          tag: tag,
+          summary: summary,
+          content: content
+        };
+        knowledge.unshift(newItem);
+        showToast("Nova regra cadastrada na Base!", "success");
+      }
+
+      safeStorageSet("ri_knowledge", knowledge);
+      closeKnowledgeModal();
+      renderKnowledgeArticles();
+    }
+
+    function editKnowledge(id) {
+      const item = knowledge.find(function(k) { return k.id === id; });
+      if (item) openKnowledgeModal(item);
+    }
+
+    function deleteKnowledge(id) {
+      const item = knowledge.find(function(k) { return k.id === id; });
+      if (!item) return;
+      if (confirm('Deseja excluir a regra "' + item.title + '"?')) {
+        knowledge = knowledge.filter(function(k) { return k.id !== id; });
+        safeStorageSet("ri_knowledge", knowledge);
+        renderKnowledgeArticles();
+        showToast("Item excluído da base.", "info");
+      }
+    }
+
+    /* Fallback copy helper */
+    function fallbackCopy(text, callback) {
+      const textarea = document.createElement("textarea");
+      textarea.value = text;
+      textarea.style.position = "fixed";
+      textarea.style.opacity = "0";
+      document.body.appendChild(textarea);
+      textarea.select();
+      try {
+        document.execCommand('copy');
+        if (callback) callback();
+      } catch (err) {
+        showToast("Erro ao copiar para a área de transferência", "error");
+      }
+      document.body.removeChild(textarea);
+    }
+
+    /* Backup Export */
+    function exportFullBackup() {
+      const backupData = {
+        exportedAt: new Date().toISOString(),
+        user: currentUser,
+        scripts: scripts,
+        knowledge: knowledge
+      };
+
+      const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(backupData, null, 2));
+      const downloadAnchor = document.createElement('a');
+      downloadAnchor.setAttribute("href", dataStr);
+      downloadAnchor.setAttribute("download", "backup_base_conhecimento_" + new Date().toISOString().slice(0, 10) + ".json");
+      document.body.appendChild(downloadAnchor);
+      downloadAnchor.click();
+      downloadAnchor.remove();
+      showToast("Backup completo exportado em JSON!", "success");
+    }
+
+    /* Toast Helper */
+    function showToast(message, type) {
+      type = type || "info";
+      const container = document.getElementById("toastContainer");
+      if (!container) return;
+
+      const toast = document.createElement("div");
+
+      let borderClass = "border-slate-700 bg-slate-900 text-white";
+      let icon = "info";
+
+      if (type === "success") {
+        borderClass = "border-emerald-500/30 bg-slate-900 text-emerald-400";
+        icon = "check-circle";
+      } else if (type === "error") {
+        borderClass = "border-rose-500/30 bg-slate-900 text-rose-400";
+        icon = "alert-circle";
+      }
+
+      toast.className = "flex items-center gap-2.5 px-4 py-3 rounded-2xl border shadow-2xl text-xs font-semibold backdrop-blur-md transition-all duration-300 transform translate-y-2 opacity-0 pointer-events-auto " + borderClass;
+      toast.innerHTML = '<i data-lucide="' + icon + '" class="w-4 h-4 shrink-0"></i><span>' + escapeHtml(message) + '</span>';
+
+      container.appendChild(toast);
+      lucide.createIcons();
+
+      setTimeout(function() {
+        toast.classList.remove("translate-y-2", "opacity-0");
+      }, 10);
+
+      setTimeout(function() {
+        toast.classList.add("opacity-0", "-translate-y-2");
+        setTimeout(function() { toast.remove(); }, 300);
+      }, 3000);
+    }
+
+    function escapeHtml(text) {
+      if (!text) return "";
+      return String(text)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+    }
+  </script>
+</body>
+</html>
