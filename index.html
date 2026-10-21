@@ -35,7 +35,7 @@
         <p class="text-xs text-slate-400 mt-1 uppercase tracking-wider font-semibold">Hub de Vendas e Scripts</p>
       </div>
 
-      <!-- Abas de Alternância (Entrar / Criar Conta) -->
+      <!-- Abas de Alternância -->
       <div class="flex rounded-xl bg-slate-900/80 p-1 mb-6 border border-slate-800">
         <button id="tabLoginBtn" type="button" onclick="switchAuthTab('login')" class="flex-1 py-2 text-xs font-bold rounded-lg transition bg-indigo-600 text-white shadow">
           Entrar
@@ -100,10 +100,8 @@
         </button>
       </form>
 
-      <!-- Mensagens de Feedback no Login -->
       <div id="authAlert" class="mt-4 p-3 rounded-xl text-xs font-medium text-center hidden"></div>
       
-      <!-- Reset de emergência caso haja dados corrompidos -->
       <div class="mt-6 pt-4 border-t border-slate-800/80 text-center">
         <button type="button" onclick="hardResetUsers()" class="text-[11px] text-slate-500 hover:text-slate-400 underline decoration-slate-700">
           Limpar credenciais locais e recomeçar
@@ -116,7 +114,6 @@
   <header id="mainHeader" class="border-b border-slate-800/80 bg-[#0c1220]/90 backdrop-blur sticky top-0 z-30 w-full hidden">
     <div class="w-full px-6 lg:px-12 h-20 flex items-center justify-between">
       
-      <!-- Logo e Identificação -->
       <div class="flex items-center gap-3.5 cursor-pointer" onclick="navigateTo('home')">
         <div class="w-11 h-11 rounded-2xl bg-gradient-to-tr from-indigo-600 to-violet-500 flex items-center justify-center text-white shadow-lg shadow-indigo-500/20">
           <i data-lucide="book-marked" class="w-6 h-6"></i>
@@ -132,7 +129,6 @@
         </div>
       </div>
 
-      <!-- Perfil do Usuário e Botão Sair -->
       <div class="flex items-center gap-4">
         <button type="button" onclick="openProfileModal()" class="flex items-center gap-3 p-1.5 sm:px-3 sm:py-2 rounded-2xl bg-slate-800/60 hover:bg-slate-800 border border-slate-700/60 transition group text-left">
           <img id="headerAvatarImg" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150" alt="Avatar" class="w-9 h-9 rounded-xl object-cover ring-2 ring-indigo-500/30">
@@ -157,10 +153,8 @@
   <!-- ================= CONTEÚDO PRINCIPAL (100% LARGURA) ================= -->
   <main class="w-full px-6 lg:px-12 py-8 flex-1 flex flex-col justify-start">
 
-    <!-- ================= VIEW 1: HOME (MENU CENTRAL) ================= -->
+    <!-- VIEW 1: HOME -->
     <section id="viewHome" class="w-full flex-1 flex flex-col justify-center items-center py-6 hidden">
-      
-      <!-- Saudação Dinâmica -->
       <div class="text-center mb-10 w-full max-w-4xl">
         <div class="relative inline-block mb-4">
           <img id="homeAvatarImg" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150" alt="Avatar" class="w-24 h-24 rounded-3xl object-cover ring-4 ring-indigo-500/20 shadow-2xl cursor-pointer hover:opacity-90 transition" onclick="openProfileModal()">
@@ -169,14 +163,12 @@
           </button>
         </div>
         <h2 id="homeGreetingTitle" class="text-2xl sm:text-4xl font-extrabold text-white tracking-tight">Bom dia, seja bem-vindo!</h2>
-        <p id="homeDateSubtitle" class="text-sm sm:text-base text-slate-400 mt-2 font-medium">Quinta-feira, 24 de Outubro de 2026</p>
+        <p id="homeDateSubtitle" class="text-sm sm:text-base text-slate-400 mt-2 font-medium">Data</p>
         <p class="text-base sm:text-lg text-slate-200 font-semibold mt-6">O que você deseja acessar hoje?</p>
       </div>
 
-      <!-- 2 Portais Principais (Grandes e Visíveis) -->
       <div class="grid grid-cols-1 md:grid-cols-2 gap-8 w-full max-w-5xl">
-        
-        <!-- Card 1: Scripts de Atendimento -->
+        <!-- Card Scripts -->
         <div onclick="navigateTo('scripts')" class="group relative bg-[#111827] hover:bg-[#151f33] border border-slate-800 hover:border-indigo-500/60 rounded-3xl p-8 sm:p-10 cursor-pointer transition-all duration-300 shadow-xl hover:shadow-2xl hover:shadow-indigo-500/10 flex flex-col justify-between">
           <div class="flex items-start justify-between mb-6">
             <div class="w-16 h-16 rounded-2xl bg-indigo-600/10 text-indigo-400 group-hover:bg-indigo-600 group-hover:text-white transition flex items-center justify-center border border-indigo-500/20">
@@ -186,7 +178,7 @@
           </div>
           <div>
             <h3 class="text-xl sm:text-2xl font-bold text-white group-hover:text-indigo-300 transition mb-2">Acessar Scripts</h3>
-            <p class="text-sm text-slate-400 leading-relaxed mb-6">Playbook com abordagem para WhatsApp, Instagram Direct, quebra de objeções e agendamento de reuniões no Google Meet em 1 clique.</p>
+            <p class="text-sm text-slate-400 leading-relaxed mb-6">Playbook com funil completo: Novos Leads, Em Contato, Reunião Agendada, No-Show, Negociação e Objeções com cópia em 1 clique.</p>
           </div>
           <div class="flex items-center gap-2 text-indigo-400 font-bold text-sm group-hover:translate-x-1.5 transition">
             <span>Abrir Scripts de Vendas</span>
@@ -194,7 +186,7 @@
           </div>
         </div>
 
-        <!-- Card 2: Base de Conhecimento -->
+        <!-- Card Base de Conhecimento -->
         <div onclick="navigateTo('knowledge')" class="group relative bg-[#111827] hover:bg-[#151f33] border border-slate-800 hover:border-emerald-500/60 rounded-3xl p-8 sm:p-10 cursor-pointer transition-all duration-300 shadow-xl hover:shadow-2xl hover:shadow-emerald-500/10 flex flex-col justify-between">
           <div class="flex items-start justify-between mb-6">
             <div class="w-16 h-16 rounded-2xl bg-emerald-500/10 text-emerald-400 group-hover:bg-emerald-500 group-hover:text-white transition flex items-center justify-center border border-emerald-500/20">
@@ -204,22 +196,18 @@
           </div>
           <div>
             <h3 class="text-xl sm:text-2xl font-bold text-white group-hover:text-emerald-300 transition mb-2">Base de Conhecimento</h3>
-            <p class="text-sm text-slate-400 leading-relaxed mb-6">Regras operacionais do dia a dia: rotinas de revenda de água e gás, clientes com mais/menos de 1000 vendas, emissão fiscal e dúvidas cotidianas.</p>
+            <p class="text-sm text-slate-400 leading-relaxed mb-6">Regras operacionais do dia a dia: rotinas de revenda de água e gás, clientes com mais/menos de 1000 vendas, emissão fiscal e suporte.</p>
           </div>
           <div class="flex items-center gap-2 text-emerald-400 font-bold text-sm group-hover:translate-x-1.5 transition">
             <span>Explorar Informações</span>
             <i data-lucide="arrow-right" class="w-4 h-4"></i>
           </div>
         </div>
-
       </div>
-
     </section>
 
-    <!-- ================= VIEW 2: PLAYBOOK DE SCRIPTS (OCUPA 100% DA LARGURA) ================= -->
+    <!-- VIEW 2: PLAYBOOK DE SCRIPTS COM AS NOVAS TAGS -->
     <section id="viewScripts" class="w-full hidden">
-      
-      <!-- Barra Superior com Voltar, Título e Botão Novo Script -->
       <div class="w-full flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
         <div class="flex items-center gap-4">
           <button type="button" onclick="navigateTo('home')" class="px-4 py-2.5 rounded-xl bg-slate-900 border border-slate-800 hover:bg-slate-800 text-slate-300 font-semibold text-xs flex items-center gap-2 transition">
@@ -228,7 +216,7 @@
           </button>
           <div>
             <h2 class="text-xl sm:text-2xl font-bold text-white">Playbook de Scripts</h2>
-            <p class="text-xs text-slate-400">Clique para copiar diretamente para o WhatsApp ou Instagram</p>
+            <p class="text-xs text-slate-400">Funil de Atendimento estruturado</p>
           </div>
         </div>
 
@@ -238,33 +226,22 @@
         </button>
       </div>
 
-      <!-- Barra de Filtros e Busca em Tempo Real -->
+      <!-- Barra de Filtros com as Novas Tags do Funil -->
       <div class="w-full bg-[#111827] border border-slate-800/80 rounded-2xl p-4 mb-8 flex flex-col lg:flex-row items-center justify-between gap-4">
-        
-        <!-- Campo de Busca -->
         <div class="relative w-full lg:w-96">
           <i data-lucide="search" class="w-4 h-4 text-slate-500 absolute left-3.5 top-1/2 -translate-y-1/2"></i>
           <input type="text" id="scriptSearchInput" oninput="renderScripts()" placeholder="Pesquisar por gatilho, etapa ou mensagem..." class="w-full pl-10 pr-4 py-2.5 bg-slate-900 border border-slate-800 rounded-xl text-sm focus:outline-none focus:border-indigo-500 text-slate-100 placeholder-slate-500">
         </div>
 
-        <!-- Categorias Rápidas -->
-        <div class="flex items-center gap-2 overflow-x-auto w-full lg:w-auto pb-1" id="scriptCategoryPills">
-          <!-- Gerado dinamicamente via JS -->
-        </div>
-
+        <div class="flex items-center gap-2 overflow-x-auto w-full lg:w-auto pb-1" id="scriptCategoryPills"></div>
       </div>
 
-      <!-- Grid de Cards de Scripts (3 Colunas Grandes preenchendo a tela toda) -->
-      <div id="scriptsGrid" class="w-full grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
-        <!-- Injetado dinamicamente via JS -->
-      </div>
-
+      <!-- Grid 100% Largo -->
+      <div id="scriptsGrid" class="w-full grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6"></div>
     </section>
 
-    <!-- ================= VIEW 3: BASE DE CONHECIMENTO (OCUPA 100% DA LARGURA) ================= -->
+    <!-- VIEW 3: BASE DE CONHECIMENTO -->
     <section id="viewKnowledge" class="w-full hidden">
-      
-      <!-- Barra Superior da Base de Conhecimento -->
       <div class="w-full flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
         <div class="flex items-center gap-4">
           <button type="button" onclick="navigateTo('home')" class="px-4 py-2.5 rounded-xl bg-slate-900 border border-slate-800 hover:bg-slate-800 text-slate-300 font-semibold text-xs flex items-center gap-2 transition">
@@ -273,7 +250,7 @@
           </button>
           <div>
             <h2 class="text-xl sm:text-2xl font-bold text-white">Base de Conhecimento & Suporte</h2>
-            <p class="text-xs text-slate-400">Situações do cotidiano com clientes, regras operacionais e notas fiscais</p>
+            <p class="text-xs text-slate-400">Regras e situações cotidianas</p>
           </div>
         </div>
 
@@ -283,32 +260,21 @@
         </button>
       </div>
 
-      <!-- Barra de Filtros e Busca de Artigos -->
       <div class="w-full bg-[#111827] border border-slate-800/80 rounded-2xl p-4 mb-8 flex flex-col lg:flex-row items-center justify-between gap-4">
-        
-        <!-- Campo de Busca -->
         <div class="relative w-full lg:w-96">
           <i data-lucide="search" class="w-4 h-4 text-slate-500 absolute left-3.5 top-1/2 -translate-y-1/2"></i>
           <input type="text" id="articleSearchInput" oninput="renderArticles()" placeholder="Buscar dúvida, nota fiscal, volume de vendas..." class="w-full pl-10 pr-4 py-2.5 bg-slate-900 border border-slate-800 rounded-xl text-sm focus:outline-none focus:border-emerald-500 text-slate-100 placeholder-slate-500">
         </div>
 
-        <!-- Categorias da Base -->
-        <div class="flex items-center gap-2 overflow-x-auto w-full lg:w-auto pb-1" id="articleCategoryPills">
-          <!-- Gerado dinamicamente via JS -->
-        </div>
-
+        <div class="flex items-center gap-2 overflow-x-auto w-full lg:w-auto pb-1" id="articleCategoryPills"></div>
       </div>
 
-      <!-- Grid de Artigos da Base de Conhecimento -->
-      <div id="articlesGrid" class="w-full grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
-        <!-- Injetado dinamicamente via JS -->
-      </div>
-
+      <div id="articlesGrid" class="w-full grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6"></div>
     </section>
 
   </main>
 
-  <!-- ================= MODAL: EDITAR PERFIL & FOTO DO DISPOSITIVO ================= -->
+  <!-- ================= MODAL: EDITAR PERFIL ================= -->
   <div id="profileModal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4 hidden">
     <div class="w-full max-w-lg bg-[#111827] border border-slate-800 rounded-3xl p-6 sm:p-8 shadow-2xl relative">
       <div class="flex items-center justify-between pb-4 border-b border-slate-800 mb-6">
@@ -318,7 +284,7 @@
           </div>
           <div>
             <h3 class="font-bold text-base text-white">Editar Meu Perfil</h3>
-            <p class="text-xs text-slate-400">Atualize sua foto, nome de exibição e credenciais</p>
+            <p class="text-xs text-slate-400">Atualize sua foto, nome e credenciais</p>
           </div>
         </div>
         <button type="button" onclick="closeProfileModal()" class="text-slate-500 hover:text-white p-1 rounded-lg">
@@ -326,7 +292,6 @@
         </button>
       </div>
 
-      <!-- Seletor de Foto do Armazenamento com Compressão Segura -->
       <div class="mb-6 bg-slate-900/80 border border-slate-800 rounded-2xl p-4 flex items-center gap-4">
         <div class="relative cursor-pointer group" onclick="document.getElementById('avatarFileInput').click()">
           <img id="modalAvatarPreview" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150" alt="Avatar" class="w-16 h-16 rounded-2xl object-cover ring-2 ring-indigo-500 group-hover:opacity-75 transition">
@@ -336,7 +301,7 @@
         </div>
         <div class="flex-1">
           <p class="text-xs font-bold text-white mb-1">Foto do Perfil</p>
-          <p class="text-[11px] text-slate-400 mb-2">Clique na imagem ou no botão para escolher do seu computador ou celular.</p>
+          <p class="text-[11px] text-slate-400 mb-2">Clique para escolher do seu dispositivo.</p>
           <input type="file" id="avatarFileInput" accept="image/*" class="hidden" onchange="handleAvatarFileSelect(event)">
           <div class="flex items-center gap-2">
             <button type="button" onclick="document.getElementById('avatarFileInput').click()" class="px-3 py-1.5 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-semibold transition">
@@ -371,7 +336,7 @@
     </div>
   </div>
 
-  <!-- ================= MODAL: CRIAR / EDITAR SCRIPT ================= -->
+  <!-- ================= MODAL: CRIAR / EDITAR SCRIPT COM NOVAS TAGS ================= -->
   <div id="scriptModal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4 hidden">
     <div class="w-full max-w-2xl bg-[#111827] border border-slate-800 rounded-3xl p-6 sm:p-8 shadow-2xl relative">
       <div class="flex items-center justify-between pb-4 border-b border-slate-800 mb-6">
@@ -390,24 +355,28 @@
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
             <label class="block text-xs font-semibold text-slate-400 mb-1.5">Título do Script</label>
-            <input type="text" id="scriptTitleInput" required placeholder="Ex: Lead Água e Gás com Dúvidas" class="w-full px-4 py-2.5 bg-slate-900 border border-slate-800 rounded-xl text-sm focus:outline-none focus:border-indigo-500 text-slate-100">
+            <input type="text" id="scriptTitleInput" required placeholder="Ex: Novo Lead: Destravar Contato" class="w-full px-4 py-2.5 bg-slate-900 border border-slate-800 rounded-xl text-sm focus:outline-none focus:border-indigo-500 text-slate-100">
           </div>
           <div>
-            <label class="block text-xs font-semibold text-slate-400 mb-1.5">Canal / Etapa (Tag)</label>
+            <label class="block text-xs font-semibold text-slate-400 mb-1.5">Etapa do Funil (Tag)</label>
             <select id="scriptTagInput" class="w-full px-4 py-2.5 bg-slate-900 border border-slate-800 rounded-xl text-sm focus:outline-none focus:border-indigo-500 text-slate-100">
+              <option value="Novo Lead">Novo Lead</option>
+              <option value="Em Contato">Em Contato</option>
+              <option value="Reunião Agendada">Reunião Agendada</option>
+              <option value="No-Show">No-Show</option>
+              <option value="Reunião Realizada">Reunião Realizada</option>
+              <option value="Negociação">Negociação</option>
+              <option value="Objeção">Objeção</option>
+              <option value="Desistência">Desistência</option>
               <option value="Instagram">Instagram</option>
               <option value="WhatsApp">WhatsApp</option>
-              <option value="Agendamento Meet">Agendamento Meet</option>
-              <option value="Objeção">Objeção</option>
-              <option value="Água e Gás">Água e Gás</option>
-              <option value="Qualificação">Qualificação</option>
             </select>
           </div>
         </div>
 
         <div>
           <label class="block text-xs font-semibold text-slate-400 mb-1.5">Objetivo / Dica de Uso</label>
-          <input type="text" id="scriptObjectiveInput" required placeholder="Ex: Qualificar volume de entregas e puxar para o Google Meet" class="w-full px-4 py-2.5 bg-slate-900 border border-slate-800 rounded-xl text-sm focus:outline-none focus:border-indigo-500 text-slate-100">
+          <input type="text" id="scriptObjectiveInput" required placeholder="Ex: Fazer o cliente responder após passar o número no Direct" class="w-full px-4 py-2.5 bg-slate-900 border border-slate-800 rounded-xl text-sm focus:outline-none focus:border-indigo-500 text-slate-100">
         </div>
 
         <div>
@@ -423,13 +392,13 @@
     </div>
   </div>
 
-  <!-- ================= MODAL: CRIAR / EDITAR ARTIGO DA BASE ================= -->
+  <!-- ================= MODAL: CRIAR / EDITAR ARTIGO ================= -->
   <div id="articleModal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4 hidden">
     <div class="w-full max-w-2xl bg-[#111827] border border-slate-800 rounded-3xl p-6 sm:p-8 shadow-2xl relative">
       <div class="flex items-center justify-between pb-4 border-b border-slate-800 mb-6">
         <div>
           <h3 id="articleModalTitle" class="font-bold text-lg text-white">Nova Informação / Regra</h3>
-          <p class="text-xs text-slate-400">Adicione soluções do cotidiano para suporte e vendas</p>
+          <p class="text-xs text-slate-400">Adicione situações cotidianas para suporte e vendas</p>
         </div>
         <button type="button" onclick="closeArticleModal()" class="text-slate-500 hover:text-white p-1 rounded-lg">
           <i data-lucide="x" class="w-5 h-5"></i>
@@ -442,7 +411,7 @@
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
             <label class="block text-xs font-semibold text-slate-400 mb-1.5">Título da Dúvida / Situação</label>
-            <input type="text" id="articleTitleInput" required placeholder="Ex: Onde emite nota fiscal eletrônica?" class="w-full px-4 py-2.5 bg-slate-900 border border-slate-800 rounded-xl text-sm focus:outline-none focus:border-emerald-500 text-slate-100">
+            <input type="text" id="articleTitleInput" required class="w-full px-4 py-2.5 bg-slate-900 border border-slate-800 rounded-xl text-sm focus:outline-none focus:border-emerald-500 text-slate-100">
           </div>
           <div>
             <label class="block text-xs font-semibold text-slate-400 mb-1.5">Categoria</label>
@@ -457,12 +426,12 @@
 
         <div>
           <label class="block text-xs font-semibold text-slate-400 mb-1.5">Resumo Rápido da Situação</label>
-          <input type="text" id="articleSummaryInput" required placeholder="Ex: Passo a passo para configurar certificado A1 e emitir NFC-e" class="w-full px-4 py-2.5 bg-slate-900 border border-slate-800 rounded-xl text-sm focus:outline-none focus:border-emerald-500 text-slate-100">
+          <input type="text" id="articleSummaryInput" required class="w-full px-4 py-2.5 bg-slate-900 border border-slate-800 rounded-xl text-sm focus:outline-none focus:border-emerald-500 text-slate-100">
         </div>
 
         <div>
           <label class="block text-xs font-semibold text-slate-400 mb-1.5">Solução / Orientação Detalhada</label>
-          <textarea id="articleContentInput" rows="7" required placeholder="Descreva como o cliente ou atendente deve proceder..." class="w-full px-4 py-3 bg-slate-900 border border-slate-800 rounded-xl text-sm leading-relaxed focus:outline-none focus:border-emerald-500 text-slate-100 resize-none"></textarea>
+          <textarea id="articleContentInput" rows="7" required class="w-full px-4 py-3 bg-slate-900 border border-slate-800 rounded-xl text-sm leading-relaxed focus:outline-none focus:border-emerald-500 text-slate-100 resize-none"></textarea>
         </div>
 
         <div class="flex items-center justify-end gap-3 pt-4 border-t border-slate-800">
@@ -501,20 +470,14 @@
     </div>
   </div>
 
-  <!-- ================= JAVASCRIPT ROBUSTO ================= -->
+  <!-- ================= JAVASCRIPT BLINDADO (PRESERVA DADOS) ================= -->
   <script>
-    // ---------------- BANCO DE USUÁRIOS PERMANENTE ----------------
+    // 1. BANCO DE USUÁRIOS COM BLINDAGEM: Se já existir no navegador, NUNCA sobrescreve.
     const DEFAULT_USERS = [
       {
         name: "Wellington Gontijo",
-        email: "vozdoton@gmail.com",
+        email: "comercial@revendainteligente.com.br",
         pass: "123456",
-        photo: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150"
-      },
-      {
-        name: "Consultor Comercial",
-        email: "consultor@baseconhecimento.com",
-        pass: "senha123",
         photo: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150"
       }
     ];
@@ -527,7 +490,7 @@
           if (Array.isArray(parsed) && parsed.length > 0) return parsed;
         }
       } catch (e) {
-        console.error("Erro ao ler DB de usuários", e);
+        console.error("Erro ao ler DB", e);
       }
       localStorage.setItem("ri_users_db", JSON.stringify(DEFAULT_USERS));
       return DEFAULT_USERS;
@@ -537,7 +500,7 @@
       try {
         localStorage.setItem("ri_users_db", JSON.stringify(users));
       } catch (e) {
-        console.error("Erro ao salvar DB de usuários", e);
+        console.error("Erro ao salvar", e);
       }
     }
 
@@ -562,33 +525,33 @@
       }
     }
 
-    // ---------------- SCRIPTS PADRÃO ----------------
+    // 2. SCRIPTS COM AS NOVAS TAGS DO FUNIL
     const INITIAL_SCRIPTS = [
       {
         id: 1,
-        title: "Instagram: Pegar WhatsApp (Lead Sem Sistema)",
-        tag: "Instagram",
-        objective: "Fazer o transbordo para o WhatsApp sem assustar o lead.",
-        content: `Olá, [Nome], tudo bem? Aqui é o Wellington, consultor na Base de Conhecimento.
+        title: "Novo Lead: Destravar Contato do Instagram no WhatsApp",
+        tag: "Novo Lead",
+        objective: "Lembrar o contato do Direct e puxar resposta em 1 pergunta simples.",
+        content: `Oi, [Nome], tudo bem? Wellington por aqui!
 
-Como você ainda não usa um sistema, o primeiro passo é entender rapidinho a sua rotina para ver exatamente o que faz sentido automatizar no seu negócio.
+Você me passou seu número lá pelo Instagram para vermos o sistema da sua loja/revenda.
 
-Me passa o seu WhatsApp com DDD? Eu te chamo por lá para combinarmos um horário rápido e eu te mostro a tela do sistema funcionando na prática. Pode ser?`
+Só para eu não te mandar nada genérico: hoje você anota as vendas no caderno/planilha ou já tem algum controle no computador?`
       },
       {
         id: 2,
-        title: "WhatsApp: Abertura e Validação de Dor",
-        tag: "WhatsApp",
-        objective: "Iniciar contato e descobrir a dor principal antes de propor reunião.",
-        content: `Oi, [Nome]! Wellington da Base de Conhecimento por aqui, falamos agorinha no Instagram.
+        title: "Em Contato: Qualificação Rápida de Operação",
+        tag: "Em Contato",
+        objective: "Entender se trabalha com água e gás e volume diário.",
+        content: `Perfeito, [Nome]! O primeiro passo é entender rapidinho sua rotina para ver exatamente o que faz sentido automatizar.
 
-Como você me disse que ainda não usa sistema, me conta em uma frase: hoje o que mais te toma tempo ou te dá trabalho no controle do dia a dia?`
+Hoje você trabalha com água e gás ou apenas um deles? Quantas entregas ou atendimentos você costuma fazer por dia em média?`
       },
       {
         id: 3,
-        title: "WhatsApp: Agendamento Google Meet",
-        tag: "Agendamento Meet",
-        objective: "Converter a dor em chamada de 15 min oferecendo 2 opções de horário.",
+        title: "Reunião Agendada: Confirmação e Link do Google Meet",
+        tag: "Reunião Agendada",
+        objective: "Travar a chamada de 15 minutos com técnica de alternativa de horário.",
         content: `Entendi perfeitamente, [Nome]. Isso é clássico e fácil de resolver.
 
 Para você não perder tempo e ver a solução de verdade, prefiro abrir a tela do sistema com você em uma chamada rápida de 15 minutos pelo Google Meet. Eu te mostro exatamente como resolver isso no seu dia a dia.
@@ -597,42 +560,58 @@ O que fica melhor para você: amanhã pela manhã ou à tarde?`
       },
       {
         id: 4,
-        title: "Revenda de Água e Gás: Apresentação Específica",
-        tag: "Água e Gás",
-        objective: "Focar em controle de vasilhames, motoqueiros e fechamento de caixa.",
-        content: `Olá, [Nome], tudo bem? Aqui é o Wellington!
+        title: "No-Show: Cliente não apareceu na chamada do Meet",
+        tag: "No-Show",
+        objective: "Acolher imprevistos com serenidade e propor nova data sem pressão.",
+        content: `Olá, [Nome], tudo bem?
 
-O setor de água e gás tem detalhes cruciais: controle de vasilhames cheios/vazios na rua, prestação de contas dos entregadores e fechamento ágil de caixa.
+Estive na nossa sala do Google Meet no horário combinado, mas imaginei que algum imprevisto de última hora tenha acontecido aí na sua rotina — sei bem como a correria do comércio é imprevisível.
 
-Nosso sistema foi feito sob medida para essa operação. Que tal uma chamada de 15 min no Google Meet para você ver a tela ao vivo na prática?
+Para você não ficar sem ver a demonstração na prática e resolver a organização do seu negócio:
 
-Qual seu melhor WhatsApp com DDD para combinarmos o horário?`
+Fica melhor remarcarmos para amanhã pela manhã ou no período da tarde?`
       },
       {
         id: 5,
-        title: "Resposta à pergunta: 'Quanto Custa / Qual o Valor?'",
-        tag: "Qualificação",
-        objective: "Explicar a variação sem perder o cliente e puxar diagnóstico.",
-        content: `Olá, [Nome]! Wellington por aqui.
+        title: "Reunião Realizada: Follow-up 24h Pós-Apresentação",
+        tag: "Reunião Realizada",
+        objective: "Recapitular a dor alinhada na tela e avançar para ativação.",
+        content: `Olá, [Nome], tudo bem?
 
-Nosso sistema é modular: você só paga pelas ferramentas que sua loja realmente usa (como frente de caixa, controle de entregas ou automação de WhatsApp). Assim você não gasta com nada desnecessário.
+Passando rápido para recapitular o que alinhamos ontem na tela: vimos exatamente como o sistema vai te poupar tempo no controle de estoque e no fechamento diário.
 
-Para eu te passar o pacote exato: hoje você trabalha com água e gás ou apenas um deles? Quantas entregas faz em média por dia?`
+Para darmos o próximo passo e você já começar a rodar com tudo organizado esta semana:
+
+Ficou alguma dúvida sobre a implantação ou podemos avançar com o cadastro da sua conta?`
       },
       {
         id: 6,
-        title: "Objeção: 'Prefiro que mande PDF ou Vídeo'",
-        tag: "Objeção",
-        objective: "Contornar pedido passivo e reforçar agilidade da chamada ao vivo.",
-        content: `Eu até poderia te mandar um PDF pronto, [Nome], mas nosso sistema tem módulos específicos para cada tipo de negócio.
+        title: "Negociação: Contorno para 'Achei Caro / Orçamento'",
+        tag: "Negociação",
+        objective: "Mostrar o custo do retrabalho manual vs o investimento da ferramenta.",
+        content: `Entendo perfeitamente, [Nome]. Cuidar do caixa e dos custos é fundamental.
 
-Se eu mandar algo genérico, vai tomar mais tempo seu lendo funções que você nem vai usar. No Meet, em 10 minutos eu mostro direto o que resolve seu dia a dia.
+Só uma reflexão rápida: hoje, quanto tempo ou dinheiro você calcula que perde com erros manuais, entregas descontroladas ou retrabalho no final do mês?
 
-Fica melhor amanhã às 10h ou às 15h?`
+Nossos clientes costumam recuperar o investimento do sistema logo nos primeiros 30 dias só estancando essas pequenas perdas invisíveis.
+
+Se o problema for a condição inicial, o que ficaria viável para você darmos início hoje?`
+      },
+      {
+        id: 7,
+        title: "Desistência: O Break-up (Arquivamento com retorno rápido)",
+        tag: "Desistência",
+        objective: "Última tentativa para quem sumiu após dias de tentativas.",
+        content: `Olá, [Nome], tudo bem?
+
+Como não tive mais retorno seu, imagino que agora não seja o momento ideal para implantar o sistema aí no seu negócio, e está tudo bem.
+
+Estou arquivando o seu contato por aqui para não lotar sua caixa de mensagens.
+
+Se lá na frente você decidir organizar e automatizar sua rotina, basta me dar um alô por aqui. Desejo muito sucesso nas vendas!`
       }
     ];
 
-    // ---------------- BASE DE CONHECIMENTO PADRÃO ----------------
     const INITIAL_ARTICLES = [
       {
         id: 1,
@@ -660,19 +639,22 @@ Fica melhor amanhã às 10h ou às 15h?`
         summary: "Passo a passo para liberação de emissão fiscal direta pelo sistema.",
         content: `Configuração:
 1. Certificado Digital: O cliente precisa ter o modelo A1 (.pfx) instalado ou carregado no sistema.
-2. Dados na SEFAZ: CNPJ credenciado como emissor e CSC (Código de Segurança do Contribuinte) obtido no portal da receita estadual.
+2. Dados na SEFAZ: CNPJ credenciado como emissor e CSC obtido na receita estadual.
 3. Onde emite: No fechamento da venda no PDV, basta clicar em "Emitir Fiscal" ou gerar NF-e avulsa no menu Vendas > Emitir Nota.`
       }
     ];
 
-    // ---------------- FUNÇÕES DE ARMAZENAMENTO E RECUPERAÇÃO ----------------
+    // 3. RECUPERAÇÃO SEGURA: Se já houver dados salvos no navegador, USA OS SEUS DADOS.
     function getStoredData(key, fallback) {
       try {
         const data = localStorage.getItem(key);
-        return data ? JSON.parse(data) : fallback;
-      } catch (e) {
-        return fallback;
-      }
+        if (data) {
+          const parsed = JSON.parse(data);
+          if (Array.isArray(parsed) && parsed.length > 0) return parsed;
+        }
+      } catch (e) {}
+      localStorage.setItem(key, JSON.stringify(fallback));
+      return fallback;
     }
 
     function setStoredData(key, val) {
@@ -688,7 +670,7 @@ Fica melhor amanhã às 10h ou às 15h?`
     let currentScriptFilter = "Todos";
     let currentArticleFilter = "Todos";
 
-    // ---------------- SISTEMA DE LOGIN E SESSÃO ----------------
+    // 4. AUTENTICAÇÃO
     function switchAuthTab(tab) {
       const isLogin = tab === 'login';
       document.getElementById('loginForm').classList.toggle('hidden', !isLogin);
@@ -786,9 +768,9 @@ Fica melhor amanhã às 10h ou às 15h?`
         localStorage.removeItem("ri_users_db");
         localStorage.removeItem("ri_active_session");
         getUsersDB();
-        showAuthAlert("Credenciais resetadas. Usuário padrão: consultor@baseconhecimento.com / senha: senha123", true);
-        document.getElementById("loginEmail").value = "consultor@baseconhecimento.com";
-        document.getElementById("loginPass").value = "senha123";
+        showAuthAlert("Credenciais restauradas: comercial@revendainteligente.com.br / 123456", true);
+        document.getElementById("loginEmail").value = "comercial@revendainteligente.com.br";
+        document.getElementById("loginPass").value = "123456";
       }
     }
 
@@ -804,7 +786,6 @@ Fica melhor amanhã às 10h ou às 15h?`
       lucide.createIcons();
     }
 
-    // ---------------- REDEFINIR SENHA ----------------
     function openForgotModal() {
       document.getElementById("forgotModal").classList.remove("hidden");
     }
@@ -828,11 +809,11 @@ Fica melhor amanhã às 10h ou às 15h?`
         document.getElementById("loginEmail").value = email;
         document.getElementById("loginPass").value = newPass;
       } else {
-        alert("E-mail não encontrado na base de usuários locais.");
+        alert("E-mail não encontrado na base de usuários.");
       }
     }
 
-    // ---------------- ATUALIZAÇÃO DE INTERFACE E BOAS-VINDAS ----------------
+    // 5. ATUALIZAÇÃO DE INTERFACE
     function updateUserInterface(user) {
       const userName = user.name || "Wellington Gontijo";
       const userPhoto = user.photo || "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150";
@@ -842,7 +823,6 @@ Fica melhor amanhã às 10h ou às 15h?`
       document.getElementById("homeAvatarImg").src = userPhoto;
       document.getElementById("modalAvatarPreview").src = userPhoto;
 
-      // Saudação baseada na hora real
       const hour = new Date().getHours();
       let greeting = "Bom dia";
       if (hour >= 12 && hour < 18) greeting = "Boa tarde";
@@ -850,13 +830,11 @@ Fica melhor amanhã às 10h ou às 15h?`
 
       document.getElementById("homeGreetingTitle").textContent = `${greeting}, seja bem-vindo, ${userName}!`;
 
-      // Data por extenso
       const options = { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' };
       const dateStr = new Date().toLocaleDateString('pt-BR', options);
       document.getElementById("homeDateSubtitle").textContent = dateStr.charAt(0).toUpperCase() + dateStr.slice(1);
     }
 
-    // ---------------- NAVEGAÇÃO ENTRE TELAS (SPA) ----------------
     function navigateTo(view) {
       document.getElementById("viewHome").classList.add("hidden");
       document.getElementById("viewScripts").classList.add("hidden");
@@ -881,8 +859,20 @@ Fica melhor amanhã às 10h ou às 15h?`
       lucide.createIcons();
     }
 
-    // ---------------- RENDERIZAÇÃO DE SCRIPTS (ALTA LEGIBILIDADE) ----------------
-    const scriptCategories = ["Todos", "Instagram", "WhatsApp", "Agendamento Meet", "Objeção", "Água e Gás", "Qualificação"];
+    // 6. CATEGORIAS ATUALIZADAS DO SEU FUNIL
+    const scriptCategories = [
+      "Todos", 
+      "Novo Lead", 
+      "Em Contato", 
+      "Reunião Agendada", 
+      "No-Show", 
+      "Reunião Realizada", 
+      "Negociação", 
+      "Objeção", 
+      "Desistência",
+      "Instagram",
+      "WhatsApp"
+    ];
 
     function renderScriptsFilters() {
       const container = document.getElementById("scriptCategoryPills");
@@ -921,7 +911,7 @@ Fica melhor amanhã às 10h ou às 15h?`
       if (filtered.length === 0) {
         grid.innerHTML = `
           <div class="col-span-full py-20 text-center text-slate-500">
-            Nenhum script encontrado para esta busca ou filtro.
+            Nenhum script encontrado para esta etapa do funil ou busca.
           </div>
         `;
         return;
@@ -930,7 +920,6 @@ Fica melhor amanhã às 10h ou às 15h?`
       grid.innerHTML = filtered.map(s => `
         <div class="bg-[#111827] border border-slate-800 hover:border-slate-700/80 rounded-3xl p-6 sm:p-7 flex flex-col justify-between shadow-xl transition">
           <div>
-            <!-- Topo do Card: Tag + Ações de Edição/Exclusão -->
             <div class="flex items-center justify-between gap-3 mb-4">
               <span class="px-3 py-1 rounded-full text-xs font-bold bg-indigo-500/10 text-indigo-400 border border-indigo-500/20">
                 ${s.tag}
@@ -945,17 +934,14 @@ Fica melhor amanhã às 10h ou às 15h?`
               </div>
             </div>
 
-            <!-- Título e Objetivo com Tipografia Ampla -->
             <h3 class="font-bold text-slate-100 text-lg sm:text-xl leading-snug mb-2">${s.title}</h3>
             <p class="text-sm text-slate-400 mb-5 leading-normal">${s.objective}</p>
 
-            <!-- Caixa de Texto do Script (Tamanho de leitura real conforme imagem) -->
             <div class="bg-[#0b0f19] border border-slate-800/90 rounded-2xl p-5 sm:p-6 text-[15px] sm:text-[16px] text-slate-200 leading-relaxed whitespace-pre-line select-all mb-6 font-normal">
               ${escapeHtml(s.content)}
             </div>
           </div>
 
-          <!-- Botão de Cópia Larga com Feedback Visual Imediato -->
           <button type="button" onclick="copyScriptText(this, ${s.id})" class="w-full flex items-center justify-center gap-2.5 py-4 px-6 rounded-2xl text-sm font-bold bg-slate-800 hover:bg-indigo-600 text-white transition active:scale-[0.98] shadow-md">
             <i data-lucide="copy" class="w-4 h-4"></i>
             <span>Copiar Script</span>
@@ -986,7 +972,6 @@ Fica melhor amanhã às 10h ou às 15h?`
       });
     }
 
-    // Modal de Scripts (Novo e Editar)
     function openScriptModal(isEdit = false) {
       document.getElementById("scriptModalTitle").textContent = isEdit ? "Editar Script de Atendimento" : "Novo Script de Atendimento";
       document.getElementById("scriptModal").classList.remove("hidden");
@@ -1052,7 +1037,7 @@ Fica melhor amanhã às 10h ou às 15h?`
       renderScripts();
     }
 
-    // ---------------- BASE DE CONHECIMENTO (ARTIGOS) ----------------
+    // 7. ARTIGOS DA BASE
     const articleCategories = ["Todos", "Operação", "Nota Fiscal", "Regra de Vendas", "Suporte Técnico"];
 
     function renderArticleFilters() {
@@ -1153,7 +1138,6 @@ Fica melhor amanhã às 10h ou às 15h?`
       });
     }
 
-    // Modal de Artigos
     function openArticleModal(isEdit = false) {
       document.getElementById("articleModalTitle").textContent = isEdit ? "Editar Informação / Regra" : "Nova Informação / Regra";
       document.getElementById("articleModal").classList.remove("hidden");
@@ -1219,7 +1203,7 @@ Fica melhor amanhã às 10h ou às 15h?`
       renderArticles();
     }
 
-    // ---------------- MODAL DE PERFIL E UPLOAD SEGURO DE FOTO ----------------
+    // 8. FOTO E PERFIL
     let tempCompressedAvatar = null;
 
     function openProfileModal() {
@@ -1239,7 +1223,6 @@ Fica melhor amanhã às 10h ou às 15h?`
       document.getElementById("profileModal").classList.add("hidden");
     }
 
-    // Redimensionamento em Canvas para nunca estourar o localStorage
     function handleAvatarFileSelect(e) {
       const file = e.target.files[0];
       if (!file) return;
@@ -1270,7 +1253,6 @@ Fica melhor amanhã às 10h ou às 15h?`
           const ctx = canvas.getContext("2d");
           ctx.drawImage(img, 0, 0, width, height);
 
-          // Gera imagem ultraleve JPEG ~20KB
           tempCompressedAvatar = canvas.toDataURL("image/jpeg", 0.85);
           document.getElementById("modalAvatarPreview").src = tempCompressedAvatar;
         };
@@ -1325,18 +1307,15 @@ Fica melhor amanhã às 10h ou às 15h?`
         .replace(/'/g, "&#039;");
     }
 
-    // ---------------- INICIALIZAÇÃO DA APLICAÇÃO ----------------
+    // 9. INICIALIZAÇÃO
     window.addEventListener("DOMContentLoaded", () => {
-      // Garante que o banco de usuários existe
       getUsersDB();
-
-      // Checa se já existe sessão salva
       const session = getActiveSession();
       if (session) {
         enterApp(session);
       } else {
-        document.getElementById("loginEmail").value = "consultor@baseconhecimento.com";
-        document.getElementById("loginPass").value = "senha123";
+        document.getElementById("loginEmail").value = "comercial@revendainteligente.com.br";
+        document.getElementById("loginPass").value = "123456";
       }
       lucide.createIcons();
     });
